@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_skip_page_height">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_skip_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_skip_page_loading"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_skip_page_height"
+        android:background="@color/common_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="加载中，请稍后..."
+            android:textColor="@color/common_black_white_text_color" />
+    </LinearLayout>
+
+</FrameLayout>

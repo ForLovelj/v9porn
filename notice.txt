@@ -1,0 +1,9 @@
+{
+  "noticeMessage": "
+    项目已停止维护，源码暂时保留。
+  ",
+  "noticeTime": "2019年07月09日",
+   "noticeTitle": "公告",
+   "noticeer": "Adimn",
+   "versionCode": 5
+ }

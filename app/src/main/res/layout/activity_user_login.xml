@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_background"
+    android:orientation="vertical"
+    tools:context="com.u9porn.ui.porn9video.user.UserLoginActivity">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="帐号"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:theme="@style/MyEditText" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:theme="@style/MyEditText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_captcha"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1000"
+                android:hint="验证码"
+                android:inputType="number"
+                android:maxLength="4"
+                android:singleLine="true"
+                android:theme="@style/MyEditText" />
+
+            <ImageView
+                android:id="@+id/wb_captcha"
+                android:layout_width="110dp"
+                app:srcCompat="@drawable/ic_loading"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/bt_user_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_selector"
+            android:text="登     录"
+            android:textColor="@color/common_always_white_text_color"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cb_remember_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="记住密码"
+            android:textColor="@color/common_black_white_text_color"
+            android:theme="@style/MyCheckBox" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Tips：验证码现已是必须的，请正确填写，同时已经不支持自动登录了（因为无法识别验证码）"
+            android:textColor="@color/common_black_white_text_color" />
+    </LinearLayout>
+
+</LinearLayout>
