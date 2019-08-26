@@ -11,6 +11,7 @@ import com.u9porn.data.cache.CacheProviders;
 import com.u9porn.data.db.entity.V9PornItem;
 import com.u9porn.data.db.entity.VideoResult;
 import com.u9porn.data.model.BaseResult;
+import com.u9porn.data.model.DouBanMeizi;
 import com.u9porn.data.model.F9PornContent;
 import com.u9porn.data.model.F9PronItem;
 import com.u9porn.data.model.FavoriteJsonResult;
@@ -30,6 +31,7 @@ import com.u9porn.data.model.pxgav.PxgavLoadMoreResponse;
 import com.u9porn.data.model.pxgav.PxgavResultWithBlockId;
 import com.u9porn.data.model.pxgav.PxgavVideoParserJsonResult;
 import com.u9porn.data.network.apiservice.AxgleServiceApi;
+import com.u9porn.data.network.apiservice.DouBanServiceApi;
 import com.u9porn.data.network.apiservice.Forum9PronServiceApi;
 import com.u9porn.data.network.apiservice.GitHubServiceApi;
 import com.u9porn.data.network.apiservice.HuaBanServiceApi;
@@ -43,6 +45,7 @@ import com.u9porn.data.network.okhttp.MyProxySelector;
 import com.u9porn.exception.FavoriteException;
 import com.u9porn.exception.MessageException;
 import com.u9porn.parser.Parse99Mm;
+import com.u9porn.parser.ParseDouBanMeiZi;
 import com.u9porn.parser.ParseForum9Porn;
 import com.u9porn.parser.ParseMeiZiTu;
 import com.u9porn.parser.ParseProxy;
@@ -85,22 +88,23 @@ public class AppApiHelper implements ApiHelper {
     private final static String COMMON_QUESTIONS_URL = "https://raw.githubusercontent.com/ForLovelj/v9porn/master/COMMON_QUESTION.md";
     private CacheProviders cacheProviders;
 
-    private V9PornServiceApi v9PornServiceApi;
+    private V9PornServiceApi     v9PornServiceApi;
     private Forum9PronServiceApi forum9PronServiceApi;
-    private GitHubServiceApi gitHubServiceApi;
-    private MeiZiTuServiceApi meiZiTuServiceApi;
-    private Mm99ServiceApi mm99ServiceApi;
-    private PavServiceApi pavServiceApi;
-    private ProxyServiceApi proxyServiceApi;
-    private HuaBanServiceApi huaBanServiceApi;
-    private AxgleServiceApi axgleServiceApi;
-    private AddressHelper addressHelper;
-    private MyProxySelector myProxySelector;
-    private Gson gson;
-    private User user;
+    private GitHubServiceApi     gitHubServiceApi;
+    private MeiZiTuServiceApi    meiZiTuServiceApi;
+    private DouBanServiceApi     douBanServiceApi;
+    private Mm99ServiceApi       mm99ServiceApi;
+    private PavServiceApi        pavServiceApi;
+    private ProxyServiceApi      proxyServiceApi;
+    private HuaBanServiceApi     huaBanServiceApi;
+    private AxgleServiceApi      axgleServiceApi;
+    private AddressHelper        addressHelper;
+    private MyProxySelector      myProxySelector;
+    private Gson                 gson;
+    private User                 user;
 
     @Inject
-    public AppApiHelper(CacheProviders cacheProviders, V9PornServiceApi v9PornServiceApi, Forum9PronServiceApi forum9PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PavServiceApi pavServiceApi, ProxyServiceApi proxyServiceApi, HuaBanServiceApi huaBanServiceApi, AxgleServiceApi axgleServiceApi, AddressHelper addressHelper, Gson gson, MyProxySelector myProxySelector, User user) {
+    public AppApiHelper(CacheProviders cacheProviders, V9PornServiceApi v9PornServiceApi, Forum9PronServiceApi forum9PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PavServiceApi pavServiceApi, ProxyServiceApi proxyServiceApi, HuaBanServiceApi huaBanServiceApi, AxgleServiceApi axgleServiceApi,DouBanServiceApi douBanServiceApi, AddressHelper addressHelper, Gson gson, MyProxySelector myProxySelector, User user) {
         this.cacheProviders = cacheProviders;
         this.v9PornServiceApi = v9PornServiceApi;
         this.forum9PronServiceApi = forum9PronServiceApi;
@@ -111,6 +115,7 @@ public class AppApiHelper implements ApiHelper {
         this.proxyServiceApi = proxyServiceApi;
         this.huaBanServiceApi = huaBanServiceApi;
         this.axgleServiceApi = axgleServiceApi;
+        this.douBanServiceApi = douBanServiceApi;
         this.addressHelper = addressHelper;
         this.gson = gson;
         this.myProxySelector = myProxySelector;
@@ -389,6 +394,31 @@ public class AppApiHelper implements ApiHelper {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public Observable<List<DouBanMeizi>> listDouBanMeiZhi(final int cid, int page, boolean pullToRefresh) {
+        DynamicKeyGroup dynamicKeyGroup = new DynamicKeyGroup(cid, page);
+        EvictDynamicKeyGroup evictDynamicKeyGroup = new EvictDynamicKeyGroup(pullToRefresh);
+        Observable<String> stringObservable = douBanServiceApi.listDouBanMeiZhi(cid, page);
+        return cacheProviders.douBanMeiZi(stringObservable,dynamicKeyGroup,evictDynamicKeyGroup)
+                .map(stringReply -> {
+                    switch (stringReply.getSource()) {
+                        case CLOUD:
+                            Logger.t(TAG).d("数据来自：网络");
+                            break;
+                        case MEMORY:
+                            Logger.t(TAG).d("数据来自：内存");
+                            break;
+                        case PERSISTENCE:
+                            Logger.t(TAG).d("数据来自：磁盘缓存");
+                            break;
+                        default:
+                            break;
+                    }
+                    return stringReply.getData();
+                })
+                .map(html -> ParseDouBanMeiZi.JsoupDoubanMeizi(html, cid));
     }
 
     @Override

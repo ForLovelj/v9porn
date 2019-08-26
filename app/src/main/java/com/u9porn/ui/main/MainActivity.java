@@ -40,6 +40,7 @@ import com.u9porn.ui.axgle.search.SearchAxgleVideoActivity;
 import com.u9porn.ui.basemain.BaseMainFragment;
 import com.u9porn.ui.download.DownloadActivity;
 import com.u9porn.ui.images.Main99MmFragment;
+import com.u9porn.ui.images.MainDBMeiZiFragment;
 import com.u9porn.ui.images.MainHuaBanFragment;
 import com.u9porn.ui.images.MainMeiZiTuFragment;
 import com.u9porn.ui.mine.MineFragment;
@@ -71,6 +72,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.u9porn.utils.Tags.DOU_BAN;
+
 /**
  * @author flymegoc
  */
@@ -91,6 +94,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     private String[] permission = PermissionConstants.getPermissions(PermissionConstants.STORAGE);
     private Main9PronVideoFragment mMain9PronVideoFragment;
     private MainMeiZiTuFragment mMaiMeiZiTuFragment;
+    private MainDBMeiZiFragment mMainDBMeiZiFragment;
     private Main9ForumFragment mMain9ForumFragment;
     private Main99MmFragment mMain99MmFragment;
     private MainHuaBanFragment mMainHuaBanFragment;
@@ -124,6 +128,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         firstTagsArray.add(Tags.TAG_AXGLE_VIDEO);
 
         secondTagsArray.add(Tags.TAG_MEI_ZI_TU);
+        secondTagsArray.add(DOU_BAN);
         secondTagsArray.add(Tags.TAG_MM_99);
         secondTagsArray.add(Tags.TAG_HUA_BAN);
 
@@ -205,6 +210,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     private void showPictureBottomSheet(int checkIndex) {
         new QMUIBottomSheet.BottomListSheetBuilder(this, true)
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), Tags.TAG_MEI_ZI_TU)
+                .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), DOU_BAN)
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), Tags.TAG_MM_99)
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), Tags.TAG_HUA_BAN)
                 .setCheckedIndex(checkIndex)
@@ -399,6 +405,16 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 //                mMain99MmFragment = null;
 //                mMaiMeiZiTuFragment = null;
                 showMessage("暂停支持", TastyToast.INFO);
+            case Tags.DOU_BAN:
+                if (mMainDBMeiZiFragment == null) {
+                    mMainDBMeiZiFragment = MainDBMeiZiFragment.getInstance();
+                }
+                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, mMainDBMeiZiFragment, contentFrameLayout.getId(), itemId, isInnerReplace);
+                secondTabShow = Tags.DOU_BAN;
+                presenter.setMainSecondTabShow(DOU_BAN);
+                mMain99MmFragment = null;
+                mMainHuaBanFragment = null;
+                mMaiMeiZiTuFragment = null;
                 break;
             default:
         }

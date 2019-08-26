@@ -9,15 +9,15 @@ import com.u9porn.di.PerFragment;
 import com.u9porn.ui.axgle.AxgleFragment;
 import com.u9porn.ui.axgle.MainAxgleFragment;
 import com.u9porn.ui.images.Main99MmFragment;
+import com.u9porn.ui.images.MainDBMeiZiFragment;
 import com.u9porn.ui.images.MainHuaBanFragment;
 import com.u9porn.ui.images.MainMeiZiTuFragment;
+import com.u9porn.ui.images.douban.DouBanFragment;
 import com.u9porn.ui.images.huaban.HuaBanFragment;
 import com.u9porn.ui.images.meizitu.MeiZiTuFragment;
 import com.u9porn.ui.images.mm99.Mm99Fragment;
 import com.u9porn.ui.mine.MineFragment;
 import com.u9porn.ui.music.MusicFragment;
-import com.u9porn.ui.pxgav.MainPxgavFragment;
-import com.u9porn.ui.pxgav.PxgavFragment;
 import com.u9porn.ui.porn9forum.Forum9IndexFragment;
 import com.u9porn.ui.porn9forum.ForumFragment;
 import com.u9porn.ui.porn9forum.Main9ForumFragment;
@@ -25,6 +25,8 @@ import com.u9porn.ui.porn9video.Main9PronVideoFragment;
 import com.u9porn.ui.porn9video.comment.CommentFragment;
 import com.u9porn.ui.porn9video.index.IndexFragment;
 import com.u9porn.ui.porn9video.videolist.VideoListFragment;
+import com.u9porn.ui.pxgav.MainPxgavFragment;
+import com.u9porn.ui.pxgav.PxgavFragment;
 
 import dagger.Module;
 import dagger.Provides;
@@ -55,6 +57,14 @@ public abstract class MainActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract MainMeiZiTuFragment mainMeiZiTuFragment();
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract MainDBMeiZiFragment mainDBMeiZiFragment();
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract DouBanFragment douBanFragment();
 
     @PerFragment
     @ContributesAndroidInjector

@@ -5,24 +5,25 @@ import android.graphics.Bitmap;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.u9porn.cookie.CookieManager;
 import com.u9porn.data.db.DbHelper;
-import com.u9porn.data.model.BaseResult;
 import com.u9porn.data.db.entity.Category;
+import com.u9porn.data.db.entity.V9PornItem;
+import com.u9porn.data.db.entity.VideoResult;
+import com.u9porn.data.model.BaseResult;
+import com.u9porn.data.model.DouBanMeizi;
+import com.u9porn.data.model.F9PornContent;
 import com.u9porn.data.model.F9PronItem;
 import com.u9porn.data.model.HuaBan;
 import com.u9porn.data.model.MeiZiTu;
 import com.u9porn.data.model.Mm99;
 import com.u9porn.data.model.Notice;
-import com.u9porn.data.model.pxgav.PxgavResultWithBlockId;
-import com.u9porn.data.model.pxgav.PxgavVideoParserJsonResult;
 import com.u9porn.data.model.PinnedHeaderEntity;
-import com.u9porn.data.model.F9PornContent;
 import com.u9porn.data.model.ProxyModel;
-import com.u9porn.data.db.entity.V9PornItem;
 import com.u9porn.data.model.UpdateVersion;
 import com.u9porn.data.model.User;
 import com.u9porn.data.model.VideoComment;
-import com.u9porn.data.db.entity.VideoResult;
 import com.u9porn.data.model.axgle.AxgleResponse;
+import com.u9porn.data.model.pxgav.PxgavResultWithBlockId;
+import com.u9porn.data.model.pxgav.PxgavVideoParserJsonResult;
 import com.u9porn.data.network.ApiHelper;
 import com.u9porn.data.prefs.PreferencesHelper;
 import com.u9porn.utils.UserHelper;
@@ -247,6 +248,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<BaseResult<List<MeiZiTu>>> listMeiZiTu(String tag, int page, boolean pullToRefresh) {
         return mApiHelper.listMeiZiTu(tag, page, pullToRefresh);
+    }
+
+    @Override
+    public Observable<List<DouBanMeizi>> listDouBanMeiZhi(int cid, int page, boolean pullToRefresh) {
+        return mApiHelper.listDouBanMeiZhi(cid,page,pullToRefresh);
     }
 
     @Override

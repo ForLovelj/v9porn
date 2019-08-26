@@ -11,6 +11,7 @@ import com.u9porn.cookie.SetCookieCache;
 import com.u9porn.cookie.SharedPrefsCookiePersistor;
 import com.u9porn.data.network.Api;
 import com.u9porn.data.network.apiservice.AxgleServiceApi;
+import com.u9porn.data.network.apiservice.DouBanServiceApi;
 import com.u9porn.data.network.apiservice.Forum9PronServiceApi;
 import com.u9porn.data.network.apiservice.GitHubServiceApi;
 import com.u9porn.data.network.apiservice.HuaBanServiceApi;
@@ -106,6 +107,7 @@ public class ApiServiceModule {
         RetrofitUrlManager.getInstance().putDomain(Api.MM_99_DOMAIN_NAME, Api.APP_99_MM_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.XICI_DAILI_DOMAIN_NAME, Api.APP_PROXY_XICI_DAILI_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.HUA_BAN_DOMAIN_NAME, Api.APP_HUA_BAN_DOMAIN);
+        RetrofitUrlManager.getInstance().putDomain(Api.DOU_BAN_DOMAIN_NAME, Api.APP_DOU_BAN_DOMAIN);
         if (!TextUtils.isEmpty(addressHelper.getVideo9PornAddress())) {
             RetrofitUrlManager.getInstance().putDomain(Api.PORN9_VIDEO_DOMAIN_NAME, addressHelper.getVideo9PornAddress());
         }
@@ -184,5 +186,11 @@ public class ApiServiceModule {
     @Provides
     AxgleServiceApi providesAxgleServiceApi(Retrofit retrofit) {
         return retrofit.create(AxgleServiceApi.class);
+    }
+
+    @Singleton
+    @Provides
+    DouBanServiceApi providesDouBanServiceApi(Retrofit retrofit) {
+        return retrofit.create(DouBanServiceApi.class);
     }
 }

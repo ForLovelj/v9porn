@@ -10,14 +10,15 @@ import android.view.ViewGroup;
 
 import com.u9porn.data.db.entity.Category;
 import com.u9porn.ui.axgle.AxgleFragment;
+import com.u9porn.ui.images.douban.DouBanFragment;
 import com.u9porn.ui.images.huaban.HuaBanFragment;
 import com.u9porn.ui.images.meizitu.MeiZiTuFragment;
 import com.u9porn.ui.images.mm99.Mm99Fragment;
-import com.u9porn.ui.pxgav.PxgavFragment;
 import com.u9porn.ui.porn9forum.Forum9IndexFragment;
 import com.u9porn.ui.porn9forum.ForumFragment;
 import com.u9porn.ui.porn9video.index.IndexFragment;
 import com.u9porn.ui.porn9video.videolist.VideoListFragment;
+import com.u9porn.ui.pxgav.PxgavFragment;
 
 import java.util.List;
 
@@ -121,6 +122,10 @@ public class BaseMainFragmentAdapter extends FragmentPagerAdapter {
                 AxgleFragment axgleFragment=AxgleFragment.getInstance();
                 axgleFragment.setCategory(category);
                 return axgleFragment;
+            case Category.TYPE_DOU_BAN:
+                DouBanFragment douBanFragment = DouBanFragment.getInstance();
+                douBanFragment.setCategory(category);
+                return douBanFragment;
             default:
         }
         return new Fragment();

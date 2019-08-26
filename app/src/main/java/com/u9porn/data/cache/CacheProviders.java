@@ -105,6 +105,18 @@ public interface CacheProviders {
     @ProviderKey("mei_zi_tu_pic_list")
     Observable<Reply<String>> meiZiTu(Observable<String> observable, DynamicKey dynamicKey, EvictDynamicKey evictDynamicKey);
 
+    /**
+     * 豆瓣妹纸分类
+     *
+     * @param observable           ob
+     * @param dynamicKeyGroup      页码分类
+     * @param evictDynamicKeyGroup 缓存控制
+     * @return ob
+     */
+    @ProviderKey("dou_ban_mei_zi_pic_list")
+    @LifeCache(duration = CACHE_TIME, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<String>> douBanMeiZi(Observable<String> observable, DynamicKeyGroup dynamicKeyGroup, EvictDynamicKeyGroup evictDynamicKeyGroup);
+
 
 
     @ProviderKey("cache_v113")

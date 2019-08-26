@@ -12,4 +12,5 @@ public class Tags {
     public static final String TAG_MEI_ZI_TU = "妹子图";
     public static final String TAG_MM_99 = "九妹图社";
     public static final String TAG_HUA_BAN = "花瓣网";
+    public static final String DOU_BAN = "豆瓣妹纸";
 }
