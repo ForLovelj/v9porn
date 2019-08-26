@@ -79,9 +79,10 @@ public class AppApiHelper implements ApiHelper {
 
     private static final String TAG = AppApiHelper.class.getSimpleName();
 
-    private final static String CHECK_UPDATE_URL = "https://raw.githubusercontent.com/techGay/v9porn/master/version.txt";
-    private final static String CHECK_NEW_NOTICE_URL = "https://raw.githubusercontent.com/techGay/v9porn/master/notice.txt";
-    private final static String COMMON_QUESTIONS_URL = "https://raw.githubusercontent.com/techGay/v9porn/master/COMMON_QUESTION.md";
+//    private final static String CHECK_UPDATE_URL = "https://raw.githubusercontent.com/techGay/v9porn/master/version.txt";
+    private final static String CHECK_UPDATE_URL = "https://raw.githubusercontent.com/ForLovelj/v9porn/master/version.txt";
+    private final static String CHECK_NEW_NOTICE_URL = "https://raw.githubusercontent.com/ForLovelj/v9porn/master/notice.txt";
+    private final static String COMMON_QUESTIONS_URL = "https://raw.githubusercontent.com/ForLovelj/v9porn/master/COMMON_QUESTION.md";
     private CacheProviders cacheProviders;
 
     private V9PornServiceApi v9PornServiceApi;
