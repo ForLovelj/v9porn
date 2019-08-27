@@ -27,6 +27,8 @@ import com.u9porn.data.model.VideoComment;
 import com.u9porn.data.model.VideoCommentResult;
 import com.u9porn.data.model.axgle.Axgle;
 import com.u9porn.data.model.axgle.AxgleResponse;
+import com.u9porn.data.model.kedouwo.KeDouModel;
+import com.u9porn.data.model.kedouwo.KeDouRelated;
 import com.u9porn.data.model.pxgav.PxgavLoadMoreResponse;
 import com.u9porn.data.model.pxgav.PxgavResultWithBlockId;
 import com.u9porn.data.model.pxgav.PxgavVideoParserJsonResult;
@@ -35,6 +37,7 @@ import com.u9porn.data.network.apiservice.DouBanServiceApi;
 import com.u9porn.data.network.apiservice.Forum9PronServiceApi;
 import com.u9porn.data.network.apiservice.GitHubServiceApi;
 import com.u9porn.data.network.apiservice.HuaBanServiceApi;
+import com.u9porn.data.network.apiservice.KeDouServiceApi;
 import com.u9porn.data.network.apiservice.MeiZiTuServiceApi;
 import com.u9porn.data.network.apiservice.Mm99ServiceApi;
 import com.u9porn.data.network.apiservice.PavServiceApi;
@@ -47,6 +50,7 @@ import com.u9porn.exception.MessageException;
 import com.u9porn.parser.Parse99Mm;
 import com.u9porn.parser.ParseDouBanMeiZi;
 import com.u9porn.parser.ParseForum9Porn;
+import com.u9porn.parser.ParseKeDouWo;
 import com.u9porn.parser.ParseMeiZiTu;
 import com.u9porn.parser.ParseProxy;
 import com.u9porn.parser.ParsePxgav;
@@ -98,13 +102,14 @@ public class AppApiHelper implements ApiHelper {
     private ProxyServiceApi      proxyServiceApi;
     private HuaBanServiceApi     huaBanServiceApi;
     private AxgleServiceApi      axgleServiceApi;
+    private KeDouServiceApi      keDouServiceApi;
     private AddressHelper        addressHelper;
     private MyProxySelector      myProxySelector;
     private Gson                 gson;
     private User                 user;
 
     @Inject
-    public AppApiHelper(CacheProviders cacheProviders, V9PornServiceApi v9PornServiceApi, Forum9PronServiceApi forum9PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PavServiceApi pavServiceApi, ProxyServiceApi proxyServiceApi, HuaBanServiceApi huaBanServiceApi, AxgleServiceApi axgleServiceApi,DouBanServiceApi douBanServiceApi, AddressHelper addressHelper, Gson gson, MyProxySelector myProxySelector, User user) {
+    public AppApiHelper(CacheProviders cacheProviders, V9PornServiceApi v9PornServiceApi, Forum9PronServiceApi forum9PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PavServiceApi pavServiceApi, ProxyServiceApi proxyServiceApi, HuaBanServiceApi huaBanServiceApi, AxgleServiceApi axgleServiceApi, DouBanServiceApi douBanServiceApi, KeDouServiceApi keDouServiceApi, AddressHelper addressHelper, Gson gson, MyProxySelector myProxySelector, User user) {
         this.cacheProviders = cacheProviders;
         this.v9PornServiceApi = v9PornServiceApi;
         this.forum9PronServiceApi = forum9PronServiceApi;
@@ -116,6 +121,7 @@ public class AppApiHelper implements ApiHelper {
         this.huaBanServiceApi = huaBanServiceApi;
         this.axgleServiceApi = axgleServiceApi;
         this.douBanServiceApi = douBanServiceApi;
+        this.keDouServiceApi = keDouServiceApi;
         this.addressHelper = addressHelper;
         this.gson = gson;
         this.myProxySelector = myProxySelector;
@@ -627,6 +633,30 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Call<ResponseBody> getPlayVideoUrl(String url) {
         return axgleServiceApi.getPlayVideoUrl(url);
+    }
+
+    @Override
+    public Observable<List<KeDouModel>> videoListLatest(int page) {
+        return keDouServiceApi.videoListLatest(page)
+                .map(ParseKeDouWo::parseVideoList);
+    }
+
+    @Override
+    public Observable<List<KeDouModel>> videoListTop(int page) {
+        return keDouServiceApi.videoListTop(page)
+                .map(ParseKeDouWo::parseVideoList);
+    }
+
+    @Override
+    public Observable<List<KeDouModel>> videoListPopular(int page) {
+        return keDouServiceApi.videoListPopular(page)
+                .map(ParseKeDouWo::parseVideoList);
+    }
+
+    @Override
+    public Observable<KeDouRelated> videoDetail(String url) {
+        return  keDouServiceApi.videoDetail(url)
+                .map(ParseKeDouWo::parseVideoDetail);
     }
 
     private Observable<PxgavResultWithBlockId> actionMore(Observable<String> observable, final boolean pullToRefresh) {

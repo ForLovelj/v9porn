@@ -12,6 +12,7 @@ public interface Api {
     String APP_PROXY_XICI_DAILI_DOMAIN = "http://www.xicidaili.com/";
     String APP_HUA_BAN_DOMAIN = "http://flymegoc.cn/";
     String APP_DOU_BAN_DOMAIN = "http://www.dbmeinv.com/";
+    String APP_KE_DOU_WO = "http://www.caca026.com/";
 
     String GITHUB_DOMAIN_NAME = "github";
     String PORN9_VIDEO_DOMAIN_NAME = "porn9_video_domain_name";
@@ -23,4 +24,5 @@ public interface Api {
     String HUA_BAN_DOMAIN_NAME = "huaban";
     String AXGLE_DOMAIN_NAME = "axgle";
     String DOU_BAN_DOMAIN_NAME = "douban";
+    String KE_DOU_WO = "kedouwo";
 }

@@ -108,6 +108,7 @@ public class ApiServiceModule {
         RetrofitUrlManager.getInstance().putDomain(Api.XICI_DAILI_DOMAIN_NAME, Api.APP_PROXY_XICI_DAILI_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.HUA_BAN_DOMAIN_NAME, Api.APP_HUA_BAN_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.DOU_BAN_DOMAIN_NAME, Api.APP_DOU_BAN_DOMAIN);
+        RetrofitUrlManager.getInstance().putDomain(Api.KE_DOU_WO, Api.APP_KE_DOU_WO);
         if (!TextUtils.isEmpty(addressHelper.getVideo9PornAddress())) {
             RetrofitUrlManager.getInstance().putDomain(Api.PORN9_VIDEO_DOMAIN_NAME, addressHelper.getVideo9PornAddress());
         }

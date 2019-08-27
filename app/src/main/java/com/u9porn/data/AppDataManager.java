@@ -22,6 +22,8 @@ import com.u9porn.data.model.UpdateVersion;
 import com.u9porn.data.model.User;
 import com.u9porn.data.model.VideoComment;
 import com.u9porn.data.model.axgle.AxgleResponse;
+import com.u9porn.data.model.kedouwo.KeDouModel;
+import com.u9porn.data.model.kedouwo.KeDouRelated;
 import com.u9porn.data.model.pxgav.PxgavResultWithBlockId;
 import com.u9porn.data.model.pxgav.PxgavVideoParserJsonResult;
 import com.u9porn.data.network.ApiHelper;
@@ -603,6 +605,26 @@ public class AppDataManager implements DataManager {
     @Override
     public Call<ResponseBody> getPlayVideoUrl(String url) {
         return mApiHelper.getPlayVideoUrl(url);
+    }
+
+    @Override
+    public Observable<List<KeDouModel>> videoListLatest(int page) {
+        return mApiHelper.videoListLatest(page);
+    }
+
+    @Override
+    public Observable<List<KeDouModel>> videoListTop(int page) {
+        return mApiHelper.videoListTop(page);
+    }
+
+    @Override
+    public Observable<List<KeDouModel>> videoListPopular(int page) {
+        return mApiHelper.videoListPopular(page);
+    }
+
+    @Override
+    public Observable<KeDouRelated> videoDetail(String url) {
+        return mApiHelper.videoDetail(url);
     }
 
     @Override

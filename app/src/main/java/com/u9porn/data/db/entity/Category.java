@@ -32,6 +32,9 @@ public class Category implements Serializable {
     public static final String[] CATEGORY_DEFAULT_DOUBAN_MEIZI_VALUE={"0","2","6","7","3","4","5"};
     public static final String[] CATEGORY_DEFAULT_DOUBAN_MEIZI_NAME={"所有","大胸妹","小翘臀","黑丝袜","美腿控","有颜值","大杂烩"};
 
+    public static final String[] CATEGORY_DEFAULT_KE_DOU_WO_VALUE={"1","2","3"};
+    public static final String[] CATEGORY_DEFAULT_KE_DOU_WO_NAME={"最新的","最受欢迎的","流行的"};
+
     public static final int TYPE_91PORN = 1;
     public static final int TYPE_91PORN_FORUM = 2;
     public static final int TYPE_MEI_ZI_TU = 3;

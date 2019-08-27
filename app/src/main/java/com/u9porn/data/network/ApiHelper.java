@@ -18,6 +18,8 @@ import com.u9porn.data.model.UpdateVersion;
 import com.u9porn.data.model.User;
 import com.u9porn.data.model.VideoComment;
 import com.u9porn.data.model.axgle.AxgleResponse;
+import com.u9porn.data.model.kedouwo.KeDouModel;
+import com.u9porn.data.model.kedouwo.KeDouRelated;
 import com.u9porn.data.model.pxgav.PxgavResultWithBlockId;
 import com.u9porn.data.model.pxgav.PxgavVideoParserJsonResult;
 
@@ -114,4 +116,12 @@ public interface ApiHelper {
     Observable<AxgleResponse> searchAxgleJavVideo(String keyWord, int page);
 
     Call<ResponseBody> getPlayVideoUrl(String url);
+
+    Observable<List<KeDouModel>> videoListLatest(int page);
+
+    Observable<List<KeDouModel>> videoListTop(int page);
+
+    Observable<List<KeDouModel>> videoListPopular(int page);
+
+    Observable<KeDouRelated> videoDetail(String url);
 }

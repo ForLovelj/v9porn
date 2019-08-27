@@ -41,6 +41,7 @@ public class AppDbHelper implements DbHelper {
         initCategory(Category.TYPE_HUA_BAN, null, Category.CATEGORY_DEFAULT_HUA_BAN_NAME);
         initCategory(Category.TYPE_AXGLE, Category.CATEGORY_DEFAULT_AXGLE_VALUE, Category.CATEGORY_DEFAULT_AXGLE_NAME);
         initCategory(Category.TYPE_DOU_BAN, Category.CATEGORY_DEFAULT_DOUBAN_MEIZI_VALUE, Category.CATEGORY_DEFAULT_DOUBAN_MEIZI_NAME);
+        initCategory(Category.TYPE_KE_DOU_WO, Category.CATEGORY_DEFAULT_KE_DOU_WO_VALUE, Category.CATEGORY_DEFAULT_KE_DOU_WO_NAME);
     }
 
     @Override
