@@ -16,6 +16,8 @@ import com.u9porn.ui.images.douban.DouBanFragment;
 import com.u9porn.ui.images.huaban.HuaBanFragment;
 import com.u9porn.ui.images.meizitu.MeiZiTuFragment;
 import com.u9porn.ui.images.mm99.Mm99Fragment;
+import com.u9porn.ui.kedouwo.KeDouFragment;
+import com.u9porn.ui.kedouwo.MainKeDouFragment;
 import com.u9porn.ui.mine.MineFragment;
 import com.u9porn.ui.music.MusicFragment;
 import com.u9porn.ui.porn9forum.Forum9IndexFragment;
@@ -113,6 +115,14 @@ public abstract class MainActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract AxgleFragment axgleFragment();
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract MainKeDouFragment mainKeDouFragment();
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract KeDouFragment KeDouFragment();
 
     @PerFragment
     @ContributesAndroidInjector

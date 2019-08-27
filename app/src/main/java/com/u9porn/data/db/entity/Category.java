@@ -40,6 +40,7 @@ public class Category implements Serializable {
     public static final int TYPE_HUA_BAN = 6;
     public static final int TYPE_AXGLE=7;
     public static final int TYPE_DOU_BAN = 8;
+    public static final int TYPE_KE_DOU_WO= 9;
     private static final long serialVersionUID = 1L;
 
     @Id(autoincrement = true)
