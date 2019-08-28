@@ -1,6 +1,8 @@
 package com.u9porn.data.model.kedouwo;
 
-public class KeDouModel {
+import java.io.Serializable;
+
+public class KeDouModel implements Serializable {
     private String title;//标题
     private String imgUrl; //预览图
     private String duration;//时长

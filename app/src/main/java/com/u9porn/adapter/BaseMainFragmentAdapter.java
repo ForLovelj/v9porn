@@ -14,6 +14,7 @@ import com.u9porn.ui.images.douban.DouBanFragment;
 import com.u9porn.ui.images.huaban.HuaBanFragment;
 import com.u9porn.ui.images.meizitu.MeiZiTuFragment;
 import com.u9porn.ui.images.mm99.Mm99Fragment;
+import com.u9porn.ui.kedouwo.KeDouFragment;
 import com.u9porn.ui.porn9forum.Forum9IndexFragment;
 import com.u9porn.ui.porn9forum.ForumFragment;
 import com.u9porn.ui.porn9video.index.IndexFragment;
@@ -126,6 +127,10 @@ public class BaseMainFragmentAdapter extends FragmentPagerAdapter {
                 DouBanFragment douBanFragment = DouBanFragment.getInstance();
                 douBanFragment.setCategory(category);
                 return douBanFragment;
+            case Category.TYPE_KE_DOU_WO:
+                KeDouFragment keDouFragment = KeDouFragment.getInstance();
+                keDouFragment.setCategory(category);
+                return keDouFragment;
             default:
         }
         return new Fragment();

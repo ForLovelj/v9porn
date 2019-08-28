@@ -19,7 +19,9 @@ public class ParseKeDouWo {
     public static List<KeDouModel> parseVideoList(String html) {
         Document document = Jsoup.parse(html);
 //        Elements recentItems = shareDoc.select("#list_videos_most_recent_videos_items").select(".item");
-        Elements recentItems = document.select("#list_videos_latest_videos_list_items").select(".item");
+//        Elements recentItems = document.select("#list_videos_latest_videos_list_items").select(".item");
+//        Elements recentItems = document.select("#list_videos_common_videos_list_items").select(".item");
+        Elements recentItems = document.select("div.list-videos").first().select(".item");
         return parseList(recentItems);
     }
 
@@ -29,12 +31,14 @@ public class ParseKeDouWo {
         Element first = document.select("div.player-holder").first();
         String data = first.data();
 
-        final String reg = "(video_url+):\\s?(.+)(.mp4/)";
+//        final String reg = "(video_url+):\\s?(.+)(.mp4/)";
+        final String reg = "(video_url+):\\s?(.+)(\\?br=\\d+)";
         Pattern p = Pattern.compile(reg);
         Matcher m = p.matcher(data);
         if (m.find()) {
             String group = m.group();
-            String videoUrl = group.substring(group.indexOf("'")+1,group.lastIndexOf("/"));
+//            String videoUrl = group.substring(group.indexOf("'")+1,group.lastIndexOf("/"));
+            String videoUrl = group.substring(group.indexOf("'"));
             Logger.d("videoUrl: "+videoUrl);
             keDouRelated.setVideoUrl(videoUrl);
         }
@@ -54,7 +58,15 @@ public class ParseKeDouWo {
             String imgUrl = item.select("img").first().attr("data-original");
             String duration = item.getElementsByClass("duration").first().text();
             String contentUrl = item.select("a").first().attr("href");
-            String rating = item.getElementsByClass("rating positive").first().text();
+            Element ratingPositive = item.getElementsByClass("rating positive").first();
+            Element ratingNegative = item.getElementsByClass("rating negative").first();
+
+            String rating;
+            if (ratingPositive != null) {
+                rating = ratingPositive.text();
+            } else {
+                rating = ratingNegative.text();
+            }
             String added = item.select(".added").first().text();
             String views = item.select(".views").first().text();
 

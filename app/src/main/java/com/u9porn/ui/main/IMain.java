@@ -27,6 +27,8 @@ public interface IMain {
 
     boolean haveNotSetAxgleAddress();
 
+    boolean haveNotSetKeDouWoAddress();
+
     boolean isUserLogin();
 
     void setPorn9VideoAddress(String porn9VideoAddress);

@@ -117,6 +117,8 @@ public interface ApiHelper {
 
     Call<ResponseBody> getPlayVideoUrl(String url);
 
+    Observable<List<KeDouModel>> videoList(String category,int page,boolean pullToRefresh);
+
     Observable<List<KeDouModel>> videoListLatest(int page);
 
     Observable<List<KeDouModel>> videoListTop(int page);

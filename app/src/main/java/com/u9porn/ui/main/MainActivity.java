@@ -43,6 +43,7 @@ import com.u9porn.ui.images.Main99MmFragment;
 import com.u9porn.ui.images.MainDBMeiZiFragment;
 import com.u9porn.ui.images.MainHuaBanFragment;
 import com.u9porn.ui.images.MainMeiZiTuFragment;
+import com.u9porn.ui.kedouwo.MainKeDouFragment;
 import com.u9porn.ui.mine.MineFragment;
 import com.u9porn.ui.music.MusicFragment;
 import com.u9porn.ui.porn9forum.Main9ForumFragment;
@@ -102,6 +103,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     private MusicFragment mMusicFragment;
     private MineFragment mMineFragment;
     private MainAxgleFragment mainAxgleFragment;
+    private MainKeDouFragment mMainKeDouFragment;
     private FragmentManager fragmentManager;
     private int selectIndex;
     private String firstTabShow;
@@ -126,6 +128,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         firstTagsArray.add(Tags.TAG_PRON_9_VIDEO);
         firstTagsArray.add(Tags.TAG_PXGAV_VIDEO);
         firstTagsArray.add(Tags.TAG_AXGLE_VIDEO);
+        firstTagsArray.add(Tags.TAG_KE_DOU_WO_VIDEO);
 
         secondTagsArray.add(Tags.TAG_MEI_ZI_TU);
         secondTagsArray.add(DOU_BAN);
@@ -188,6 +191,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_video_library_black_24dp), Tags.TAG_PRON_9_VIDEO)
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_video_library_black_24dp), Tags.TAG_PXGAV_VIDEO)
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_video_library_black_24dp), Tags.TAG_AXGLE_VIDEO)
+                .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_video_library_black_24dp), Tags.TAG_KE_DOU_WO_VIDEO)
                 .setCheckedIndex(checkIndex)
                 .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                     dialog.dismiss();
@@ -354,6 +358,17 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, mainAxgleFragment, contentFrameLayout.getId(), itemId, isInnerReplace);
                 firstTabShow = Tags.TAG_AXGLE_VIDEO;
                 presenter.setMainFirstTabShow(Tags.TAG_AXGLE_VIDEO);
+                break;
+            case Tags.TAG_KE_DOU_WO_VIDEO:
+                if (presenter.haveNotSetKeDouWoAddress()) {
+
+                }
+                if (mMainKeDouFragment == null) {
+                    mMainKeDouFragment = MainKeDouFragment.getInstance();
+                }
+                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, mMainKeDouFragment, contentFrameLayout.getId(), itemId, isInnerReplace);
+                firstTabShow = Tags.TAG_KE_DOU_WO_VIDEO;
+                presenter.setMainFirstTabShow(Tags.TAG_KE_DOU_WO_VIDEO);
                 break;
             default:
         }

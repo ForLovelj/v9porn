@@ -26,4 +26,6 @@ public class Keys {
     public final static String KEY_INTENT_NOTICE = "key_intent_notice";
 
     public final static String KEY_SELECT_INDEX = "key_select_index";
+
+    public final static String KEY_INTENT_KEDOUWO_ITEM = "key_intent_kedouwo_item";
 }

@@ -636,6 +636,14 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Observable<List<KeDouModel>> videoList(String category, int page, boolean pullToRefresh) {
+//        DynamicKeyGroup dynamicKeyGroup = new DynamicKeyGroup(category, page);
+//        EvictDynamicKeyGroup evictDynamicKeyGroup = new EvictDynamicKeyGroup(pullToRefresh);
+        return keDouServiceApi.videoList(category,page)
+                .map(ParseKeDouWo::parseVideoList);
+    }
+
+    @Override
     public Observable<List<KeDouModel>> videoListLatest(int page) {
         return keDouServiceApi.videoListLatest(page)
                 .map(ParseKeDouWo::parseVideoList);

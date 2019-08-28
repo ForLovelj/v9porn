@@ -10,13 +10,17 @@ import retrofit2.http.Url;
 
 public interface KeDouServiceApi {
 
+    @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
+    @GET("{category}/{page}/")
+    Observable<String> videoList(@Path("category") String category,@Path("page") int page);
+
     /**
      * 最新的
      * @param page
      * @return
      */
     @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
-    @GET("latest-updates/{page}")
+    @GET("latest-updates/{page}/")
     Observable<String> videoListLatest(@Path("page") int page);
 
     /**
@@ -25,7 +29,7 @@ public interface KeDouServiceApi {
      * @return
      */
     @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
-    @GET("top-rated/{page}")
+    @GET("top-rated/{page}/")
     Observable<String> videoListTop(@Path("page") int page);
 
     /**
@@ -34,9 +38,10 @@ public interface KeDouServiceApi {
      * @return
      */
     @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
-    @GET("most-popular/{page}")
+    @GET("most-popular/{page}/")
     Observable<String> videoListPopular(@Path("page") int page);
 
     @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
+    @GET
     Observable<String> videoDetail(@Url String url);
 }
