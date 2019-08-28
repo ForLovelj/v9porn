@@ -29,6 +29,8 @@ import com.u9porn.ui.MvpActivity;
 import com.u9porn.utils.DialogUtils;
 import com.u9porn.utils.GlideApp;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -71,8 +73,7 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
                 return;
             }
             mKeDouModel = keDouModel;
-            presenter.videoDetail(keDouModel.getContentUrl());
-            mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
+            playVideo();
         });
 //        mSwipeLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,9 +83,7 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
             return;
         }
         mExoVideoControlsMobile = (ExoVideoControlsMobile) mVideoView.getVideoControls();
-        if (!TextUtils.isEmpty(mKeDouModel.getImgUrl())) {
-            GlideApp.with(this).load(Uri.parse(mKeDouModel.getImgUrl())).transition(new DrawableTransitionOptions().crossFade(300)).into(mVideoView.getPreviewImageView());
-        }
+
         mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
         mAlertDialog = DialogUtils.initLoadingDialog(this, "获取视频地址中，请稍候...");
         mVideoView.setOnPreparedListener(this);
@@ -94,7 +93,7 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
                 onBackPressed();
             }
         });
-        presenter.videoDetail(mKeDouModel.getContentUrl());
+        playVideo();
     }
 
     @Override
@@ -185,20 +184,27 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
         String videoUrl = keDouRelated.getVideoUrl();
         presenter.getRealVideoUrl(videoUrl);
 
-//        List<KeDouModel> relatedList = keDouRelated.getRelatedList();
-//        mKeDouAdapter.setNewData(relatedList);
+        List<KeDouModel> relatedList = keDouRelated.getRelatedList();
+        mKeDouAdapter.setNewData(relatedList);
     }
 
     @Override
     public void onVideoUrl(String url) {
         mKeDouModel.setVideoUrl(url);
         mVideoView.setVideoPath(url);
-        mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
     }
 
     private void dismissDialog() {
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
         }
+    }
+
+    private void playVideo() {
+        if (!TextUtils.isEmpty(mKeDouModel.getImgUrl())) {
+            GlideApp.with(this).load(Uri.parse(mKeDouModel.getImgUrl())).transition(new DrawableTransitionOptions().crossFade(300)).into(mVideoView.getPreviewImageView());
+        }
+        presenter.videoDetail(mKeDouModel.getContentUrl());
+        mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
     }
 }

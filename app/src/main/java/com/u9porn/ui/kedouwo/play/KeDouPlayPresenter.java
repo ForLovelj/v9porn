@@ -58,14 +58,14 @@ public class KeDouPlayPresenter extends MvpBasePresenter<KeDouPlayView> implemen
                            @Override
                            public void onBegin(Disposable d) {
                                ifViewAttached(view -> {
-//                                   view.showLoading(true);
+                                   view.showLoading(true);
                                });
                            }
 
                            @Override
                            public void onSuccess(String s) {
                                ifViewAttached(view -> {
-                                   view.onVideoUrl(url);
+                                   view.onVideoUrl(s);
                                    view.showContent();
                                });
                            }

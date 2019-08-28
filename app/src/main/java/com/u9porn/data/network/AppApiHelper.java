@@ -669,8 +669,10 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Observable<String> getRealVideoUrl(String url) {
-        return keDouServiceApi.getRealVideoUrl(url)
-                .map(ParseKeDouWo::parseRealVideoUrl);
+        return Observable.just(url)
+                .map(ParseKeDouWo::getRedirectUrl);
+//        return keDouServiceApi.getRealVideoUrl(url)
+//                .map(ParseKeDouWo::parseRealVideoUrl);
     }
 
     private Observable<PxgavResultWithBlockId> actionMore(Observable<String> observable, final boolean pullToRefresh) {

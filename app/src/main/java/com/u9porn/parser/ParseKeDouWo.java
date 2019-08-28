@@ -9,6 +9,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -90,5 +92,13 @@ public class ParseKeDouWo {
         Document document = Jsoup.parse(html);
         String videoUrl = document.select("video").first().select("source").first().attr("src");
         return videoUrl;
+    }
+
+    public static String getRedirectUrl(String path) throws Exception {
+        HttpURLConnection conn = (HttpURLConnection) new URL(path)
+                .openConnection();
+        conn.setInstanceFollowRedirects(false);
+        conn.setConnectTimeout(5000);
+        return conn.getHeaderField("Location");
     }
 }
