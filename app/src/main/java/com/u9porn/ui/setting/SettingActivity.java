@@ -131,6 +131,14 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
         t6yAddressItemWithChevron.setDetailText("暂未支持，敬请期待");
         t6yAddressItemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
+        //蝌蚪窝地址
+        QMUICommonListItemView kedouwoAddressItemWithChevron = qmuiGroupListView.createItemView(getString(R.string.address_kedou));
+        kedouwoAddressItemWithChevron.setOrientation(QMUICommonListItemView.VERTICAL);
+        kedouwoAddressItemWithChevron.setId(R.id.setting_item_kedou_address);
+        String kedouwoAddress = presenter.getKeDouWoAddress();
+        kedouwoAddressItemWithChevron.setDetailText(TextUtils.isEmpty(kedouwoAddress) ? "未设置" : kedouwoAddress);
+        kedouwoAddressItemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+
         tsec.addItemView(addressItemWithChevron, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +164,12 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
             }
         });
         tsec.addItemView(t6yAddressItemWithChevron, this);
+        tsec.addItemView(kedouwoAddressItemWithChevron, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddressSettingDialog((QMUICommonListItemView) v, AppPreferencesHelper.KEY_SP_KE_DOU_WO_ADDRESS);
+            }
+        });
         tsec.addTo(qmuiGroupListView);
 
         //播放引擎
@@ -334,6 +348,8 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
                 return "P*gav地址设置";
             case AppPreferencesHelper.KEY_SP_AXGLE_ADDRESS:
                 return "A*gle地址设置";
+            case AppPreferencesHelper.KEY_SP_KE_DOU_WO_ADDRESS:
+                return "KeDouWo地址设置";
             default:
                 return "地址设置";
         }
@@ -367,6 +383,10 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
                 case AppPreferencesHelper.KEY_SP_AXGLE_ADDRESS:
                     autoCompleteTextView.setText(presenter.getAxgleAddress());
                     break;
+                case AppPreferencesHelper.KEY_SP_KE_DOU_WO_ADDRESS:
+                    autoCompleteTextView.setText(presenter.getKeDouWoAddress());
+                    break;
+
                 default:
             }
         }
@@ -465,6 +485,11 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
                     RetrofitUrlManager.getInstance().putDomain(Api.AXGLE_DOMAIN_NAME, presenter.getAxgleAddress());
                 }
                 break;
+            case AppPreferencesHelper.KEY_SP_KE_DOU_WO_ADDRESS:
+                if (!TextUtils.isEmpty(presenter.getKeDouWoAddress())) {
+                    RetrofitUrlManager.getInstance().putDomain(Api.KE_DOU_WO_DOMAIN_NAME, presenter.getKeDouWoAddress());
+                }
+                break;
             default:
         }
     }
@@ -489,6 +514,9 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
                 break;
             case AppPreferencesHelper.KEY_SP_AXGLE_ADDRESS:
                 presenter.setAxgleAddress(address);
+                break;
+            case AppPreferencesHelper.KEY_SP_KE_DOU_WO_ADDRESS:
+                presenter.setKeDouWoAddress(address);
                 break;
             default:
         }

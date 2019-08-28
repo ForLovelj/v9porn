@@ -15,6 +15,7 @@ import com.u9porn.data.network.apiservice.DouBanServiceApi;
 import com.u9porn.data.network.apiservice.Forum9PronServiceApi;
 import com.u9porn.data.network.apiservice.GitHubServiceApi;
 import com.u9porn.data.network.apiservice.HuaBanServiceApi;
+import com.u9porn.data.network.apiservice.KeDouServiceApi;
 import com.u9porn.data.network.apiservice.MeiZiTuServiceApi;
 import com.u9porn.data.network.apiservice.Mm99ServiceApi;
 import com.u9porn.data.network.apiservice.PavServiceApi;
@@ -108,7 +109,6 @@ public class ApiServiceModule {
         RetrofitUrlManager.getInstance().putDomain(Api.XICI_DAILI_DOMAIN_NAME, Api.APP_PROXY_XICI_DAILI_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.HUA_BAN_DOMAIN_NAME, Api.APP_HUA_BAN_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.DOU_BAN_DOMAIN_NAME, Api.APP_DOU_BAN_DOMAIN);
-//        RetrofitUrlManager.getInstance().putDomain(Api.KE_DOU_WO, Api.APP_KE_DOU_WO);
         if (!TextUtils.isEmpty(addressHelper.getVideo9PornAddress())) {
             RetrofitUrlManager.getInstance().putDomain(Api.PORN9_VIDEO_DOMAIN_NAME, addressHelper.getVideo9PornAddress());
         }
@@ -120,6 +120,9 @@ public class ApiServiceModule {
         }
         if (!TextUtils.isEmpty(addressHelper.getAxgleAddress())) {
             RetrofitUrlManager.getInstance().putDomain(Api.AXGLE_DOMAIN_NAME, addressHelper.getAxgleAddress());
+        }
+        if (!TextUtils.isEmpty(addressHelper.getKeDouWoAddress())) {
+            RetrofitUrlManager.getInstance().putDomain(Api.KE_DOU_WO_DOMAIN_NAME, addressHelper.getKeDouWoAddress());
         }
         return RetrofitUrlManager.getInstance().with(builder).build();
     }
@@ -193,5 +196,11 @@ public class ApiServiceModule {
     @Provides
     DouBanServiceApi providesDouBanServiceApi(Retrofit retrofit) {
         return retrofit.create(DouBanServiceApi.class);
+    }
+
+    @Singleton
+    @Provides
+    KeDouServiceApi providesKeDouWOServiceApi(Retrofit retrofit) {
+        return retrofit.create(KeDouServiceApi.class);
     }
 }

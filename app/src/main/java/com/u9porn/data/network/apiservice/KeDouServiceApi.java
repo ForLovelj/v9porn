@@ -15,7 +15,7 @@ public interface KeDouServiceApi {
      * @param page
      * @return
      */
-    @Headers({"Domain-Name: " + Api.KE_DOU_WO})
+    @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
     @GET("latest-updates/{page}")
     Observable<String> videoListLatest(@Path("page") int page);
 
@@ -24,7 +24,7 @@ public interface KeDouServiceApi {
      * @param page
      * @return
      */
-    @Headers({"Domain-Name: " + Api.KE_DOU_WO})
+    @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
     @GET("top-rated/{page}")
     Observable<String> videoListTop(@Path("page") int page);
 
@@ -33,10 +33,10 @@ public interface KeDouServiceApi {
      * @param page
      * @return
      */
-    @Headers({"Domain-Name: " + Api.KE_DOU_WO})
+    @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
     @GET("most-popular/{page}")
     Observable<String> videoListPopular(@Path("page") int page);
 
-    @Headers({"Domain-Name: " + Api.KE_DOU_WO})
+    @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
     Observable<String> videoDetail(@Url String url);
 }

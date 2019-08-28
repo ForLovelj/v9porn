@@ -23,5 +23,5 @@ public interface Api {
     String HUA_BAN_DOMAIN_NAME = "huaban";
     String AXGLE_DOMAIN_NAME = "axgle";
     String DOU_BAN_DOMAIN_NAME = "douban";
-    String KE_DOU_WO = "kedouwo";
+    String KE_DOU_WO_DOMAIN_NAME = "kedouwo_domain_name";
 }

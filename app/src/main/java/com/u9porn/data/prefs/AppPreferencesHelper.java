@@ -27,6 +27,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
     public final static String KEY_SP_FORUM_91_PORN_ADDRESS = "key_sp_forum_91_porn_address";
     public final static String KEY_SP_PIG_AV_ADDRESS = "key_sp_pig_av_address";
     public final static String KEY_SP_AXGLE_ADDRESS = "key_sp_axgle_address";
+    public final static String KEY_SP_KE_DOU_WO_ADDRESS = "key_sp_ke_dou_wo_address";
     private final static String KEY_SP_USER_LOGIN_USERNAME = "key_sp_user_login_username";
     private final static String KEY_SP_USER_LOGIN_PASSWORD = "key_sp_user_login_password";
     private final static String KEY_SP_USER_AUTO_LOGIN = "key_sp_user_auto_login";
@@ -323,6 +324,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public String getAxgleAddress() {
         return mPrefs.getString(KEY_SP_AXGLE_ADDRESS, "");
+    }
+
+    @Override
+    public void setKeDouWoAddress(String address) {
+        mPrefs.edit().putString(KEY_SP_KE_DOU_WO_ADDRESS,address).apply();
+    }
+
+    @Override
+    public String getKeDouWoAddress() {
+        return mPrefs.getString(KEY_SP_KE_DOU_WO_ADDRESS, "");
     }
 
     @Override

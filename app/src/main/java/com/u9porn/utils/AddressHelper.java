@@ -47,4 +47,8 @@ public class AddressHelper {
     public String getAxgleAddress() {
         return preferencesHelper.getAxgleAddress();
     }
+
+    public String getKeDouWoAddress() {
+        return  preferencesHelper.getKeDouWoAddress();
+    }
 }

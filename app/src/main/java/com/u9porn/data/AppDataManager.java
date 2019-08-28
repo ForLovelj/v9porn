@@ -548,6 +548,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public void setKeDouWoAddress(String address) {
+        mPreferencesHelper.setKeDouWoAddress(address);
+    }
+
+    @Override
+    public String getKeDouWoAddress() {
+        return mPreferencesHelper.getKeDouWoAddress();
+    }
+
+    @Override
     public boolean isFixMainNavigation() {
         return mPreferencesHelper.isFixMainNavigation();
     }

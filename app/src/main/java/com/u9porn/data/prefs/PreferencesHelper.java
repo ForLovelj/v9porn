@@ -106,6 +106,10 @@ public interface PreferencesHelper {
 
     String getAxgleAddress();
 
+    void setKeDouWoAddress(String address);
+
+    String getKeDouWoAddress();
+
     boolean isFixMainNavigation();
 
     void setFixMainNavigation(boolean fixMainNavigation);

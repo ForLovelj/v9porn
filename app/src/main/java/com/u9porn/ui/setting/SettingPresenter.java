@@ -425,6 +425,16 @@ public class SettingPresenter extends MvpBasePresenter<SettingView> implements I
     }
 
     @Override
+    public void setKeDouWoAddress(String address) {
+        dataManager.setKeDouWoAddress(address);
+    }
+
+    @Override
+    public String getKeDouWoAddress() {
+        return dataManager.getKeDouWoAddress();
+    }
+
+    @Override
     public boolean isFixMainNavigation() {
         return dataManager.isFixMainNavigation();
     }
