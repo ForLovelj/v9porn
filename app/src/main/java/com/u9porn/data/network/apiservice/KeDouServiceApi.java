@@ -44,4 +44,8 @@ public interface KeDouServiceApi {
     @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
     @GET
     Observable<String> videoDetail(@Url String url);
+
+    @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
+    @GET
+    Observable<String> getRealVideoUrl(@Url String url);
 }

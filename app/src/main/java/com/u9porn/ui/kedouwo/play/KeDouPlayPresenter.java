@@ -25,23 +25,17 @@ public class KeDouPlayPresenter extends MvpBasePresenter<KeDouPlayView> implemen
         super(provider, appDataManager);
     }
 
+    @Override
     public void videoDetail(String url) {
         appDataManager.videoDetail(url)
                 .compose(RxSchedulersHelper.ioMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
                 .subscribe(new CallBackWrapper<KeDouRelated>() {
                     @Override
-                    public void onBegin(Disposable d) {
-                        ifViewAttached(view -> {
-                            view.showLoading(true);
-                        });
-                    }
-
-                    @Override
                     public void onSuccess(KeDouRelated keDouRelated) {
                         ifViewAttached(view -> {
-                            view.onVideoDetail(keDouRelated);
                             view.showContent();
+                            view.onVideoDetail(keDouRelated);
                         });
                     }
 
@@ -53,6 +47,39 @@ public class KeDouPlayPresenter extends MvpBasePresenter<KeDouPlayView> implemen
                         });
                     }
                 });
+    }
+
+    @Override
+    public void getRealVideoUrl(String url) {
+       appDataManager.getRealVideoUrl(url)
+                        .compose(RxSchedulersHelper.ioMainThread())
+                        .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
+                       .subscribe(new CallBackWrapper<String>() {
+                           @Override
+                           public void onBegin(Disposable d) {
+                               ifViewAttached(view -> {
+//                                   view.showLoading(true);
+                               });
+                           }
+
+                           @Override
+                           public void onSuccess(String s) {
+                               ifViewAttached(view -> {
+                                   view.onVideoUrl(url);
+                                   view.showContent();
+                               });
+                           }
+
+                           @Override
+                           public void onError(String msg, int code) {
+                               ifViewAttached(view -> {
+                                   view.showError(msg);
+                                   view.showContent();
+                               });
+                           }
+                       });
+
+
     }
 
 }

@@ -11,4 +11,6 @@ import com.u9porn.ui.BaseView;
 public interface KeDouPlayView extends BaseView {
 
     void onVideoDetail(KeDouRelated keDouRelated);
+
+    void onVideoUrl(String url);
 }

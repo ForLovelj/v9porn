@@ -29,8 +29,6 @@ import com.u9porn.ui.MvpActivity;
 import com.u9porn.utils.DialogUtils;
 import com.u9porn.utils.GlideApp;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -74,6 +72,7 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
             }
             mKeDouModel = keDouModel;
             presenter.videoDetail(keDouModel.getContentUrl());
+            mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
         });
 //        mSwipeLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,12 +81,13 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
         if (mKeDouModel == null) {
             return;
         }
+        mExoVideoControlsMobile = (ExoVideoControlsMobile) mVideoView.getVideoControls();
         if (!TextUtils.isEmpty(mKeDouModel.getImgUrl())) {
             GlideApp.with(this).load(Uri.parse(mKeDouModel.getImgUrl())).transition(new DrawableTransitionOptions().crossFade(300)).into(mVideoView.getPreviewImageView());
         }
+        mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
         mAlertDialog = DialogUtils.initLoadingDialog(this, "获取视频地址中，请稍候...");
         mVideoView.setOnPreparedListener(this);
-        mExoVideoControlsMobile = (ExoVideoControlsMobile) mVideoView.getVideoControls();
         mExoVideoControlsMobile.setOnBackButtonClickListener(new ExoVideoControlsMobile.OnBackButtonClickListener() {
             @Override
             public void onBackClick(View view) {
@@ -183,11 +183,17 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
     public void onVideoDetail(KeDouRelated keDouRelated) {
         if(keDouRelated == null)return;
         String videoUrl = keDouRelated.getVideoUrl();
-        mKeDouModel.setVideoUrl(videoUrl);
-        mVideoView.setVideoPath(videoUrl);
+        presenter.getRealVideoUrl(videoUrl);
+
+//        List<KeDouModel> relatedList = keDouRelated.getRelatedList();
+//        mKeDouAdapter.setNewData(relatedList);
+    }
+
+    @Override
+    public void onVideoUrl(String url) {
+        mKeDouModel.setVideoUrl(url);
+        mVideoView.setVideoPath(url);
         mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
-        List<KeDouModel> relatedList = keDouRelated.getRelatedList();
-        mKeDouAdapter.setNewData(relatedList);
     }
 
     private void dismissDialog() {

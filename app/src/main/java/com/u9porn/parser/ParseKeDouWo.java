@@ -38,7 +38,7 @@ public class ParseKeDouWo {
         if (m.find()) {
             String group = m.group();
 //            String videoUrl = group.substring(group.indexOf("'")+1,group.lastIndexOf("/"));
-            String videoUrl = group.substring(group.indexOf("'"));
+            String videoUrl = group.substring(group.indexOf("'")+1);
             Logger.d("videoUrl: "+videoUrl);
             keDouRelated.setVideoUrl(videoUrl);
         }
@@ -84,5 +84,11 @@ public class ParseKeDouWo {
             keDouModels.add(keDouModel);
         }
         return keDouModels;
+    }
+
+    public static String parseRealVideoUrl(String html) {
+        Document document = Jsoup.parse(html);
+        String videoUrl = document.select("video").first().select("source").first().attr("src");
+        return videoUrl;
     }
 }

@@ -643,6 +643,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<String> getRealVideoUrl(String url) {
+        return mApiHelper.getRealVideoUrl(url);
+    }
+
+    @Override
     public String getVideoCacheProxyUrl(String originalVideoUrl) {
         return httpProxyCacheServer.getProxyUrl(originalVideoUrl, true);
     }
