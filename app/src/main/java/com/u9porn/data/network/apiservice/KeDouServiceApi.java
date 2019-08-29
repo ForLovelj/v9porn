@@ -4,6 +4,7 @@ import com.u9porn.data.network.Api;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
@@ -43,7 +44,7 @@ public interface KeDouServiceApi {
 
     @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
     @GET
-    Observable<String> videoDetail(@Url String url);
+    Observable<String> videoRelated(@Url String url, @Header("X-Forwarded-For") String ipAddress);
 
     @Headers({"Domain-Name: " + Api.KE_DOU_WO_DOMAIN_NAME})
     @GET

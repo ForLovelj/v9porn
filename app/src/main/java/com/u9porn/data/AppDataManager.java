@@ -638,8 +638,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<KeDouRelated> videoDetail(String url) {
-        return mApiHelper.videoDetail(url);
+    public Observable<KeDouRelated> videoRelated(String url) {
+        return mApiHelper.videoRelated(url);
     }
 
     @Override
@@ -666,6 +666,11 @@ public class AppDataManager implements DataManager {
     @Override
     public void resetPorn91VideoWatchTime(boolean reset) {
         cookieManager.resetPorn91VideoWatchTime(reset);
+    }
+
+    @Override
+    public void resetKeDouWoVideoWatchTime() {
+        cookieManager.resetKeDouWoVideoWatchTime();
     }
 
     @Override

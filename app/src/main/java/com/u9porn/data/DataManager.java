@@ -19,6 +19,8 @@ public interface DataManager extends DbHelper, ApiHelper, PreferencesHelper {
 
     void resetPorn91VideoWatchTime(boolean reset);
 
+    void resetKeDouWoVideoWatchTime();
+
     User getUser();
 
     boolean isUserLogin();

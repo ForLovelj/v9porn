@@ -29,6 +29,11 @@ public class ParseKeDouWo {
 
     public static KeDouRelated parseVideoDetail(String html) {
         KeDouRelated keDouRelated = new KeDouRelated();
+        if (html.contains("您已超过观看限制")) {
+            Logger.d("已经超出观看上限了");
+            //设置标志位
+            keDouRelated.setOutOfWatch(true);
+        }
         Document document = Jsoup.parse(html);
         Element first = document.select("div.player-holder").first();
         String data = first.data();
@@ -99,6 +104,8 @@ public class ParseKeDouWo {
                 .openConnection();
         conn.setInstanceFollowRedirects(false);
         conn.setConnectTimeout(5000);
-        return conn.getHeaderField("Location");
+        String location = conn.getHeaderField("Location");
+        conn.disconnect();
+        return location;
     }
 }

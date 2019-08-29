@@ -662,8 +662,9 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<KeDouRelated> videoDetail(String url) {
-        return  keDouServiceApi.videoDetail(url)
+    public Observable<KeDouRelated> videoRelated(String url) {
+        String ip = addressHelper.getRandomIPAddress();
+        return  keDouServiceApi.videoRelated(url,ip)
                 .map(ParseKeDouWo::parseVideoDetail);
     }
 

@@ -7,7 +7,7 @@ package com.u9porn.ui.kedouwo.play;
  */
 public interface IKeDouPlay {
 
-    void videoDetail(String url);
+    void videoRelated(String url);
 
     void getRealVideoUrl(String url);
 

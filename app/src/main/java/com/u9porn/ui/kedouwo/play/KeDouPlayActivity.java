@@ -5,19 +5,23 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
 import com.flymegoc.exolibrary.widget.ExoVideoControlsMobile;
 import com.flymegoc.exolibrary.widget.ExoVideoView;
+import com.github.rubensousa.floatingtoolbar.FloatingToolbar;
+import com.helper.loadviewhelper.load.LoadViewHelper;
 import com.jaeger.library.StatusBarUtil;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.u9porn.R;
@@ -42,30 +46,60 @@ import butterknife.Unbinder;
  * Des:
  * Date: 2019/8/28.
  */
-public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPresenter> implements KeDouPlayView, SwipeRefreshLayout.OnRefreshListener, OnPreparedListener {
+public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPresenter> implements KeDouPlayView, OnPreparedListener {
 
     @BindView(R.id.video_view)
-    ExoVideoView         mVideoView;
+    ExoVideoView mVideoView;
     @BindView(R.id.fr_container)
-    FrameLayout          mFrContainer;
+    FrameLayout  mFrContainer;
     @BindView(R.id.recyclerView)
-    RecyclerView         mRecyclerView;
-//    @BindView(R.id.swipe_layout)
-//    SwipeRefreshLayout   mSwipeLayout;
+    RecyclerView mRecyclerView;
+    @BindView(R.id.tv_play_video_title)
+    TextView             mTvPlayVideoTitle;
+    @BindView(R.id.tv_play_video_author_)
+    TextView             mTvPlayVideoAuthor;
+    @BindView(R.id.tv_play_video_add_date)
+    AppCompatTextView    mTvPlayVideoAddDate;
+    @BindView(R.id.tv_play_video_info)
+    AppCompatTextView    mTvPlayVideoInfo;
+    @BindView(R.id.floatingToolbar)
+    FloatingToolbar      mFloatingToolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
     @Inject
-    protected KeDouPlayPresenter     mKeDouPlayPresenter;
+    protected KeDouPlayPresenter mKeDouPlayPresenter;
     private KeDouAdapter           mKeDouAdapter;
     private KeDouModel             mKeDouModel;
     private AlertDialog            mAlertDialog;
     private ExoVideoControlsMobile mExoVideoControlsMobile;
-    private Unbinder mUnbinder;
-    private boolean isPauseByActivityEvent;
+    private Unbinder               mUnbinder;
+    private boolean                isPauseByActivityEvent;
+    private LoadViewHelper mHelper;
+    private int retryCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ke_dou_wo);
         mUnbinder = ButterKnife.bind(this);
+
+        mKeDouModel = (KeDouModel) getIntent().getSerializableExtra(Keys.KEY_INTENT_KEDOUWO_ITEM);
+        if (mKeDouModel == null) {
+            return;
+        }
+        mExoVideoControlsMobile = (ExoVideoControlsMobile) mVideoView.getVideoControls();
+        mAlertDialog = DialogUtils.initLoadingDialog(this, "获取视频地址中，请稍候...");
+
+        initListener();
+        initData();
+        initBottomMenu();
+    }
+
+    private void  initData() {
+        playVideo();
+    }
+
+    private void initListener() {
         mKeDouAdapter = new KeDouAdapter(R.layout.item_kedouwo);
         mKeDouAdapter.setOnItemClickListener((adapter, view, position) -> {
             KeDouModel keDouModel = (KeDouModel) adapter.getItem(position);
@@ -75,25 +109,29 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
             mKeDouModel = keDouModel;
             playVideo();
         });
-//        mSwipeLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mKeDouAdapter);
-        mKeDouModel = (KeDouModel) getIntent().getSerializableExtra(Keys.KEY_INTENT_KEDOUWO_ITEM);
-        if (mKeDouModel == null) {
-            return;
-        }
-        mExoVideoControlsMobile = (ExoVideoControlsMobile) mVideoView.getVideoControls();
 
-        mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
-        mAlertDialog = DialogUtils.initLoadingDialog(this, "获取视频地址中，请稍候...");
         mVideoView.setOnPreparedListener(this);
-        mExoVideoControlsMobile.setOnBackButtonClickListener(new ExoVideoControlsMobile.OnBackButtonClickListener() {
+        mExoVideoControlsMobile.setOnBackButtonClickListener(view -> onBackPressed());
+
+        mHelper = new LoadViewHelper(mRecyclerView);
+        mHelper.setListener(() -> presenter.videoRelated(mKeDouModel.getContentUrl()));
+    }
+
+    private void initBottomMenu() {
+        mFloatingToolbar.attachFab(mFab);
+        mFloatingToolbar.setClickListener(new FloatingToolbar.ItemClickListener() {
             @Override
-            public void onBackClick(View view) {
-                onBackPressed();
+            public void onItemClick(MenuItem item) {
+                onOptionsItemSelected(item);
+            }
+
+            @Override
+            public void onItemLongClick(MenuItem item) {
+
             }
         });
-        playVideo();
     }
 
     @Override
@@ -149,18 +187,17 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
         if (mAlertDialog != null && !mAlertDialog.isShowing()) {
             mAlertDialog.show();
         }
-//        mSwipeLayout.setRefreshing(true);
     }
 
     @Override
     public void showContent() {
         dismissDialog();
-//        mSwipeLayout.setRefreshing(false);
+        mHelper.showContent();
     }
 
     @Override
     public void showMessage(String msg, int type) {
-        super.showMessage(msg,type);
+        super.showMessage(msg, type);
     }
 
     @Override
@@ -169,23 +206,34 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
     }
 
     @Override
-    public void onRefresh() {
-//        mSwipeLayout.setRefreshing(false);
-    }
-
-    @Override
     public void onPrepared() {
         mVideoView.start();
     }
 
     @Override
-    public void onVideoDetail(KeDouRelated keDouRelated) {
-        if(keDouRelated == null)return;
+    public void onVideoRelated(KeDouRelated keDouRelated) {
+        if (keDouRelated == null)
+            return;
         String videoUrl = keDouRelated.getVideoUrl();
-        presenter.getRealVideoUrl(videoUrl);
+        if (TextUtils.isEmpty(videoUrl)) {
+            showMessage("解析视频地址失败",TastyToast.ERROR);
+            if (keDouRelated.isOutOfWatch() && retryCount < 1) {
+                //超出观看限制，再试一次
+                retryCount++;
+                presenter.videoRelated(mKeDouModel.getContentUrl());
+            }
+        } else {
+            retryCount = 0;
+            presenter.getRealVideoUrl(videoUrl);
+        }
 
         List<KeDouModel> relatedList = keDouRelated.getRelatedList();
         mKeDouAdapter.setNewData(relatedList);
+    }
+
+    @Override
+    public void onVideoRelatedError(String msg) {
+        mHelper.showError();
     }
 
     @Override
@@ -204,7 +252,10 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
         if (!TextUtils.isEmpty(mKeDouModel.getImgUrl())) {
             GlideApp.with(this).load(Uri.parse(mKeDouModel.getImgUrl())).transition(new DrawableTransitionOptions().crossFade(300)).into(mVideoView.getPreviewImageView());
         }
-        presenter.videoDetail(mKeDouModel.getContentUrl());
+        presenter.videoRelated(mKeDouModel.getContentUrl());
         mExoVideoControlsMobile.setTitle(mKeDouModel.getTitle());
+        mTvPlayVideoTitle.setText(mKeDouModel.getTitle());
+        mTvPlayVideoInfo.setText(mKeDouModel.getInfo());
+        mTvPlayVideoAuthor.setText("nobody");
     }
 }

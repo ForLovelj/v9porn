@@ -125,7 +125,7 @@ public interface ApiHelper {
 
     Observable<List<KeDouModel>> videoListPopular(int page);
 
-    Observable<KeDouRelated> videoDetail(String url);
+    Observable<KeDouRelated> videoRelated(String url);
 
     Observable<String> getRealVideoUrl(String url);
 }

@@ -85,4 +85,17 @@ public class KeDouModel implements Serializable {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("添加时间：")
+                .append(added)
+                .append("  ")
+                .append("观看次数：")
+                .append(views)
+                .append("  ")
+                .append("好评率：")
+                .append(rating);
+        return sb.toString();
+    }
 }
