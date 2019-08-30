@@ -38,6 +38,11 @@ public class MainPresenter extends MvpBasePresenter<MainView> implements IMain {
     }
 
     @Override
+    public int getNoticeVersionCode() {
+        return  dataManager.getNoticeVersionCode();
+    }
+
+    @Override
     public void setMainSecondTabShow(String tabId) {
         dataManager.setMainSecondTabShow(tabId);
     }

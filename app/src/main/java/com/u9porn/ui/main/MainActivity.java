@@ -153,6 +153,9 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     }
 
     private void checkNeedToShowUpdateOrNoticeDialog() {
+        if (presenter.getNoticeVersionCode() == Notice.ABANDONED) {
+            throw new IllegalStateException("The project has been abandoned.");
+        }
         UpdateVersion updateVersion = (UpdateVersion) getIntent().getSerializableExtra(Keys.KEY_INTENT_UPDATE);
         if (updateVersion != null) {
             showUpdateDialog(updateVersion);

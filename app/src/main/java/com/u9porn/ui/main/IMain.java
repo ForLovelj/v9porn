@@ -9,6 +9,8 @@ public interface IMain {
 
     void saveNoticeVersionCode(int versionCode);
 
+    int getNoticeVersionCode();
+
     void setIgnoreUpdateVersionCode(int versionCode);
 
     void setMainSecondTabShow(String tabId);
