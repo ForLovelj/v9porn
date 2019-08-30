@@ -1,9 +1,9 @@
 {
   "noticeMessage": "
-    项目已停止维护，源码暂时保留。
+    突突突，开车了...
   ",
-  "noticeTime": "2019年07月09日",
+  "noticeTime": "2019年08月30日",
    "noticeTitle": "公告",
    "noticeer": "Adimn",
-   "versionCode": 5
+   "versionCode": 1
  }
