@@ -176,7 +176,7 @@ public abstract class BaseAppCompatActivity extends DaggerAppCompatActivity impl
         //因为时在onDestroy 才取消的请求，初步断定又可能就是在那么微妙的一瞬间发生了
         //android.view.WindowManager$BadTokenException · Unable to add window -- token android.os.BinderProxy@53d6ca9 is not valid; is your activity running? 如果activity正在销毁则可能引发
         if (!isFinishing()) {
-            TastyToast.makeText(getApplicationContext(), msg, TastyToast.LENGTH_SHORT, type).show();
+            TastyToast.makeText(getApplicationContext(), msg, TastyToast.LENGTH_SHORT, type);
         }
     }
 
