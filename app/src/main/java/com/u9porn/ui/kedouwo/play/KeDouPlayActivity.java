@@ -183,6 +183,35 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_play_collect) {
+            showMessage("当前未支持", TastyToast.INFO);
+            return true;
+        } else if (id == R.id.menu_play_download) {
+            showMessage("当前未支持", TastyToast.INFO);
+            return true;
+        } else if (id == R.id.menu_play_share) {
+            showMessage("当前未支持", TastyToast.INFO);
+            return true;
+        } else if (id == R.id.menu_play_comment) {
+            showMessage("当前未支持", TastyToast.INFO);
+            return true;
+        } else if (id == R.id.menu_play_close) {
+            showMessage("当前未支持", TastyToast.INFO);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
     public void showLoading(boolean pullToRefresh) {
         if (mAlertDialog != null && !mAlertDialog.isShowing()) {
             mAlertDialog.show();
@@ -257,5 +286,6 @@ public class KeDouPlayActivity extends MvpActivity<KeDouPlayView, KeDouPlayPrese
         mTvPlayVideoTitle.setText(mKeDouModel.getTitle());
         mTvPlayVideoInfo.setText(mKeDouModel.getInfo());
         mTvPlayVideoAuthor.setText("nobody");
+        mRecyclerView.scrollToPosition(0);
     }
 }

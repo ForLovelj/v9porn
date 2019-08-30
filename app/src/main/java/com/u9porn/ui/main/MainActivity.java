@@ -350,6 +350,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 break;
             case Tags.TAG_AXGLE_VIDEO:
                 if (presenter.haveNotSetAxgleAddress()) {
+                    showNeedSetAddressDialog();
                     return;
                 }
                 if (mainAxgleFragment == null) {
@@ -361,7 +362,8 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 break;
             case Tags.TAG_KE_DOU_WO_VIDEO:
                 if (presenter.haveNotSetKeDouWoAddress()) {
-
+                    showNeedSetAddressDialog();
+                    return;
                 }
                 if (mMainKeDouFragment == null) {
                     mMainKeDouFragment = MainKeDouFragment.getInstance();

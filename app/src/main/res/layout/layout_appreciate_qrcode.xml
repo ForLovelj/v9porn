@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:src="@drawable/mm_reward_qrcode_1547141812376" />
+        android:src="@drawable/mm_reward_qrcode_1567130480000" />
 
     <ImageView
         android:id="@+id/iv_appreciate_qr_code_ali_pay"
@@ -17,7 +17,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:visibility="gone"
-        android:src="@drawable/alipay1547141972480" />
+        android:src="@drawable/alipay1567130480000" />
 
     <TextView
         android:layout_width="match_parent"

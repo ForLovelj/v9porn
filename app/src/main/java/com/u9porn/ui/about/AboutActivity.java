@@ -107,7 +107,7 @@ public class AboutActivity extends MvpActivity<AboutView, AboutPresenter> implem
                 .addItemView(mAboutGroupListView.createItemView(getResources().getString(R.string.about_item_github)), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url = "https://github.com/techGay/v9porn";
+                        String url = "https://github.com/ForLovelj/v9porn";
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse(url));
                         startActivity(intent);
@@ -116,7 +116,7 @@ public class AboutActivity extends MvpActivity<AboutView, AboutPresenter> implem
                 .addItemView(mAboutGroupListView.createItemView(getResources().getString(R.string.about_item_homepage)), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url = "https://github.com/techGay/v9porn/issues";
+                        String url = "https://github.com/ForLovelj/v9porn/issues";
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse(url));
                         startActivity(intent);
@@ -203,9 +203,9 @@ public class AboutActivity extends MvpActivity<AboutView, AboutPresenter> implem
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (radioGroup.getCheckedRadioButtonId() == R.id.rb_ali_pay) {
-                    saveToSystemGallery("zhi_fu_bao", R.drawable.alipay1547141972480);
+                    saveToSystemGallery("zhi_fu_bao", R.drawable.alipay1567130480000);
                 } else {
-                    saveToSystemGallery("wei_xin", R.drawable.mm_reward_qrcode_1547141812376);
+                    saveToSystemGallery("wei_xin", R.drawable.mm_reward_qrcode_1567130480000);
                 }
             }
         });
