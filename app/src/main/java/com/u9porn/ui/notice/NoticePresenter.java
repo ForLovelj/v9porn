@@ -41,7 +41,6 @@ public class NoticePresenter extends MvpBasePresenter<NoticeView> implements INo
                 .subscribe(new CallBackWrapper<Notice>() {
                     @Override
                     public void onSuccess(final Notice notice) {
-                        notice.setVersionCode(-1);
                         if (notice.getVersionCode() == Notice.ABANDONED) {
                             dataManager.setNoticeVersionCode(notice.getVersionCode());
                         }
