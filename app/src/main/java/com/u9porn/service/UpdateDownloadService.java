@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.text.format.Formatter;
@@ -18,10 +20,11 @@ import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.orhanobut.logger.Logger;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.u9porn.BuildConfig;
 import com.u9porn.R;
-import com.u9porn.data.model.UpdateVersion;
 import com.u9porn.constants.Constants;
+import com.u9porn.data.model.UpdateVersion;
 import com.u9porn.utils.NotificationChannelHelper;
 
 import java.io.File;
@@ -149,7 +152,16 @@ public class UpdateDownloadService extends Service {
         File file = new File(path);
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(getApplicationContext(), "com.u9porn.fileprovider", file);
+            uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID+".fileprovider", file);
+            //兼容8.0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                boolean hasInstallPermission = getPackageManager().canRequestPackageInstalls();
+                if (!hasInstallPermission) {
+                    TastyToast.makeText(getApplicationContext(), "请在设置中打开允许安装未知来源", TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                    startInstallPermissionSettingActivity();
+                    return;
+                }
+            }
         } else {
             uri = Uri.fromFile(file);
         }
@@ -158,6 +170,17 @@ public class UpdateDownloadService extends Service {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转到设置-允许安装未知来源-页面
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startInstallPermissionSettingActivity() {
+        //注意这个是8.0新API
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
