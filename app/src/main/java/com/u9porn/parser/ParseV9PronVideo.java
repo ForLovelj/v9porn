@@ -213,7 +213,13 @@ public class ParseV9PronVideo {
 
         Document doc = Jsoup.parse(html);
         // 先直接取source
-        String videoUrl = doc.select("video").first().select("source").first().attr("src");
+        String videoUrl = null;
+        try {
+            videoUrl = doc.select("video").first().select("source").first().attr("src");
+        } catch (Exception e) {
+            Logger.t(TAG).e("解析source失败，尝试获取加密链接");
+            e.printStackTrace();
+        }
         if (TextUtils.isEmpty(videoUrl)) {
             // 找不到的话 解密
             final String reg = "document.write\\(strencode\\(\"(.+)\",\"(.+)\",.+\\)\\);";
@@ -236,6 +242,7 @@ public class ParseV9PronVideo {
                 videoUrl = source.select("source").first().attr("src");
             } else {
                 //如果都获取不到就找分享链接
+                Logger.t(TAG).e("解析加密链接失败，尝试获取分享链接");
                 try {
                     String shareLink = doc.select("#linkForm2 #fm-video_link").text();
                     Document shareDoc = Jsoup.connect(shareLink)
