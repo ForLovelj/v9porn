@@ -10,6 +10,6 @@ import retrofit2.http.Query;
 
 public interface DouBanServiceApi {
     @Headers({"Domain-Name: " + Api.DOU_BAN_DOMAIN_NAME})
-    @GET("index")
-    Observable<String> listDouBanMeiZhi(@Query("cid") int cid, @Query("pager_offset") int page);
+    @GET("/")
+    Observable<String> listDouBanMeiZhi(@Query("cid") int cid, @Query("page") int page);
 }
