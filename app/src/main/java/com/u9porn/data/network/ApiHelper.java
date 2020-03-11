@@ -28,6 +28,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * @author flymegoc
@@ -128,4 +129,8 @@ public interface ApiHelper {
     Observable<KeDouRelated> videoRelated(String url);
 
     Observable<String> getRealVideoUrl(String url);
+
+    Observable<Response<ResponseBody>> testV9Porn(String url);
+
+    Observable<Response<ResponseBody>> verifyGoogleRecaptcha(String action, String r, String id, String recaptcha);
 }

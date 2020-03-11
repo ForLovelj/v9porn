@@ -1,9 +1,10 @@
 {
-"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.1.6.apk",
+"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.1.7.apk",
 "updateMessage": "
 1. 修复视频解析\n
+2. 添加Google机器人验证\n
 注意：无法自动更新或者9.0以上系统需要手动下载apk升级
 ",
-"versionCode": 16,
-"versionName": "1.1.6"
+"versionCode": 17,
+"versionName": "1.1.7"
 }

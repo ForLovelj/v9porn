@@ -295,7 +295,8 @@ public class ParseV9PronVideo {
         videoResult.setUserOtherInfo(otherInfo);
         Logger.t(TAG).d(otherInfo);
 
-        String thumImg = doc.getElementById("vid").attr("poster");
+//        String thumImg = doc.getElementById("vid").attr("poster");
+        String thumImg = doc.getElementById("player_one").attr("poster");
         videoResult.setThumbImgUrl(thumImg);
         Logger.t(TAG).d("缩略图：" + thumImg);
 

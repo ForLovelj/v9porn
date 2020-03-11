@@ -9,6 +9,8 @@ import com.u9porn.ui.axgle.search.SearchAxgleVideoActivity;
 import com.u9porn.ui.axgle.search.SearchAxgleVideoActivityModule;
 import com.u9porn.ui.download.DownloadActivity;
 import com.u9porn.ui.download.DownloadActivityModule;
+import com.u9porn.ui.google.GoogleRecaptchaVerifyActivity;
+import com.u9porn.ui.google.GoogleRecaptchaVerifyActivityModule;
 import com.u9porn.ui.images.viewimage.PictureViewerActivity;
 import com.u9porn.ui.images.viewimage.PictureViewerActivityModule;
 import com.u9porn.ui.kedouwo.play.KeDouPlayActivity;
@@ -130,4 +132,8 @@ public abstract class ActivityBindingModule {
     @PerActivity
     @ContributesAndroidInjector(modules = KeDouPlayActivityModule.class)
     abstract KeDouPlayActivity keDouPlayActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = GoogleRecaptchaVerifyActivityModule.class)
+    abstract GoogleRecaptchaVerifyActivity googleRecaptchaVerifyActivity();
 }

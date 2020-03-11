@@ -10,6 +10,10 @@ public interface PreferencesHelper {
 
     String getPorn9VideoAddress();
 
+    void setPorn9ProxyCookie(String cookie);
+
+    String getPorn9ProxyCookie();
+
     void setPorn9ForumAddress(String address);
 
     String getPorn9ForumAddress();

@@ -80,7 +80,7 @@ public class ApiServiceModule {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(@NonNull String message) {
-                Logger.t(TAG).d(message);
+                Logger.t("OkHttp").d(message);
             }
         });
         logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);

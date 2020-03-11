@@ -159,6 +159,11 @@
             android:name=".ui.kedouwo.play.KeDouPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.google.GoogleRecaptchaVerifyActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
+            android:label="@string/google_recaptcha_verify"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

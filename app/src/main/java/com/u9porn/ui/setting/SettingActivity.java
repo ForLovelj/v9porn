@@ -24,6 +24,7 @@ import com.u9porn.constants.Constants;
 import com.u9porn.data.network.Api;
 import com.u9porn.data.prefs.AppPreferencesHelper;
 import com.u9porn.ui.MvpActivity;
+import com.u9porn.ui.google.GoogleRecaptchaVerifyActivity;
 import com.u9porn.ui.porn9video.user.UserLoginActivity;
 import com.u9porn.utils.DialogUtils;
 import com.u9porn.utils.PlaybackEngine;
@@ -276,6 +277,7 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
         sec.addItemView(openSkipPageItemWithSwitch, null);
         sec.addItemView(showUrlRedirectTipDialogItemWithSwitch, null);
         sec.addItemView(fixMainNavigationItemWithSwitch, null);
+        sec.addItemView(verifyGoogleRecaptcha(), this);
         sec.addTo(qmuiGroupListView);
     }
 
@@ -308,6 +310,17 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
             }
         });
         picker.show();
+    }
+
+    private QMUICommonListItemView verifyGoogleRecaptcha() {
+        QMUICommonListItemView googleRecaptchaItemWithChevron = qmuiGroupListView.createItemView(getString(R.string.google_recaptcha_verify));
+        googleRecaptchaItemWithChevron.setId(R.id.setting_item_google_recaptcha_verify);
+        googleRecaptchaItemWithChevron.setOrientation(QMUICommonListItemView.VERTICAL);
+
+        googleRecaptchaItemWithChevron.setDetailText("手动验证Google机器人");
+        googleRecaptchaItemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+
+        return googleRecaptchaItemWithChevron;
     }
 
     private void showIsMoveOldDirVideoFileToNewDirDialog(final String newDirPath, final QMUICommonListItemView qmuiCommonListItemView) {
@@ -621,6 +634,15 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
             case R.id.setting_item_t6y_forum_address:
                 showMessage("暂未支持，敬请期待。", TastyToast.INFO);
 //                showAddressSettingDialog((QMUICommonListItemView) v, "");
+                break;
+            case R.id.setting_item_google_recaptcha_verify:
+                String address = presenter.getVideo9PornAddress();
+                if (TextUtils.isEmpty(address)) {
+                    showMessage("请先设置9*PORN地址", TastyToast.INFO);
+                    return;
+                }
+                Intent intent = new Intent(this, GoogleRecaptchaVerifyActivity.class);
+                startActivityWithAnimation(intent);
                 break;
             default:
         }

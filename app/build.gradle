@@ -9,8 +9,8 @@ android {
         applicationId "com.u9porn"
         minSdkVersion parent.ext.minSdkVersion
         targetSdkVersion parent.ext.targetSdkVersion
-        versionCode 16
-        versionName "1.1.6"
+        versionCode 17
+        versionName "1.1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -26,12 +26,21 @@ android {
     }
 
     buildTypes {
-        debug {
-            ext.enableBugsnag = false
-        }
         release {
             signingConfig signingConfigs.release
+            // zipalign优化
+            zipAlignEnabled true
+            // 移除无用的资源文件
+            shrinkResources true
+            // 混淆
             minifyEnabled true
+            // 加载默认混淆配置文件 progudard-android.txt在sdk目录里面，不用管，proguard-rules.pro是我们自己配的混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
+        }
+        debug {
+            ext.enableBugsnag = false
+            signingConfig signingConfigs.release
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
         }
     }
@@ -54,7 +63,7 @@ android {
 }
 
 greendao {
-    schemaVersion 4//数据库版本号
+    schemaVersion 5//数据库版本号
 }
 
 bugly {

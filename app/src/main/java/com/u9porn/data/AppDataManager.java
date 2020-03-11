@@ -38,6 +38,7 @@ import javax.inject.Singleton;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * @author flymegoc
@@ -305,6 +306,16 @@ public class AppDataManager implements DataManager {
     @Override
     public String getPorn9VideoAddress() {
         return mPreferencesHelper.getPorn9VideoAddress();
+    }
+
+    @Override
+    public void setPorn9ProxyCookie(String cookie) {
+        mPreferencesHelper.setPorn9ProxyCookie(cookie);
+    }
+
+    @Override
+    public String getPorn9ProxyCookie() {
+        return mPreferencesHelper.getPorn9ProxyCookie();
     }
 
     @Override
@@ -645,6 +656,16 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<String> getRealVideoUrl(String url) {
         return mApiHelper.getRealVideoUrl(url);
+    }
+
+    @Override
+    public Observable<Response<ResponseBody>> testV9Porn(String url) {
+        return mApiHelper.testV9Porn(url);
+    }
+
+    @Override
+    public Observable<Response<ResponseBody>> verifyGoogleRecaptcha(String action, String r, String id, String recaptcha) {
+        return mApiHelper.verifyGoogleRecaptcha(action, r, id, recaptcha);
     }
 
     @Override

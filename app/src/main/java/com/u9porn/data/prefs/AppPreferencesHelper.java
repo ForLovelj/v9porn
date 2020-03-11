@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 public class AppPreferencesHelper implements PreferencesHelper {
 
     public final static String KEY_SP_PORN_91_VIDEO_ADDRESS = "key_sp_custom_address";
+    public final static String KEY_SP_PORN_COOKIE_PROXY = "key_sp_porn_cookie_proxy";
     public final static String KEY_SP_FORUM_91_PORN_ADDRESS = "key_sp_forum_91_porn_address";
     public final static String KEY_SP_PIG_AV_ADDRESS = "key_sp_pig_av_address";
     public final static String KEY_SP_AXGLE_ADDRESS = "key_sp_axgle_address";
@@ -68,6 +69,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public String getPorn9VideoAddress() {
         return mPrefs.getString(KEY_SP_PORN_91_VIDEO_ADDRESS, "");
+    }
+
+    @Override
+    public void setPorn9ProxyCookie(String cookie) {
+        mPrefs.edit().putString(KEY_SP_PORN_COOKIE_PROXY,cookie).apply();
+    }
+
+    @Override
+    public String getPorn9ProxyCookie() {
+        return mPrefs.getString(KEY_SP_PORN_COOKIE_PROXY,"");
     }
 
     @Override

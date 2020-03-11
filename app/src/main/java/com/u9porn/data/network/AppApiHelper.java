@@ -75,6 +75,7 @@ import io.rx_cache2.EvictProvider;
 import io.rx_cache2.Reply;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * @author flymegoc
@@ -674,6 +675,16 @@ public class AppApiHelper implements ApiHelper {
                 .map(ParseKeDouWo::getRedirectUrl);
 //        return keDouServiceApi.getRealVideoUrl(url)
 //                .map(ParseKeDouWo::parseRealVideoUrl);
+    }
+
+    @Override
+    public Observable<Response<ResponseBody>> testV9Porn(String url) {
+        return v9PornServiceApi.testV9Porn(url);
+    }
+
+    @Override
+    public Observable<Response<ResponseBody>> verifyGoogleRecaptcha(String action, String r, String id, String recaptcha) {
+        return v9PornServiceApi.verifyGoogleRecaptcha(action, r, id, recaptcha);
     }
 
     private Observable<PxgavResultWithBlockId> actionMore(Observable<String> observable, final boolean pullToRefresh) {
