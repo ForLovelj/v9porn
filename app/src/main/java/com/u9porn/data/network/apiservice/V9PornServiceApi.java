@@ -2,6 +2,8 @@ package com.u9porn.data.network.apiservice;
 
 import com.u9porn.data.network.Api;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -12,6 +14,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 /**
@@ -39,7 +42,7 @@ public interface V9PornServiceApi {
      */
     @Headers({"Domain-Name: " + Api.PORN9_VIDEO_DOMAIN_NAME})
     @GET("/view_video.php")
-    Observable<String> getVideoPlayPage(@Query("viewkey") String viewkey, @Header("X-Forwarded-For") String ipAddress, @Header("Referer") String referer);
+    Observable<String> getVideoPlayPage(@QueryMap Map<String, String> viewkey, @Header("X-Forwarded-For") String ipAddress, @Header("Referer") String referer);
 
     /**
      * 获取相应类别数据
@@ -66,6 +69,7 @@ public interface V9PornServiceApi {
     @Headers({"Domain-Name: " + Api.PORN9_VIDEO_DOMAIN_NAME})
     @GET("captcha.php")
     Observable<ResponseBody> captcha();
+
     /**
      * @param username     用户名
      * @param password     密码
