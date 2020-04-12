@@ -24,7 +24,7 @@ android {
             storeFile file('../v9key.jks')
         }
         debug {
-            storeFile file('/Users/kerryzhang/.android/debug.keystore')
+            //storeFile file('../v9key.jks')
         }
     }
 
