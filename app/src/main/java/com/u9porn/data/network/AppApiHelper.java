@@ -60,6 +60,7 @@ import com.u9porn.utils.AddressHelper;
 import com.u9porn.utils.UserHelper;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -200,9 +201,24 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Observable<VideoResult> loadPorn9VideoUrl(String viewKey) {
+
+        String[] queryMap = viewKey.split("&");
+        Map<String, String> viewKeyQuery = new LinkedHashMap<>(queryMap.length);
+        for (String q : queryMap) {
+            String[] keyValue = q.split("=");
+            if (keyValue.length == 0) {
+                continue;
+            } else if (keyValue.length == 1) {
+                viewKeyQuery.put(keyValue[0], "");
+            } else {
+                viewKeyQuery.put(keyValue[0], keyValue[1]);
+            }
+        }
+
+
         String ip = addressHelper.getRandomIPAddress();
         //因为登录后不在返回用户uid，需要在此页面获取，所以当前页面不在缓存，确保用户登录后刷新当前页面可以获取到用户uid
-        return v9PornServiceApi.getVideoPlayPage(viewKey, ip, HeaderUtils.getIndexHeader(addressHelper))
+        return v9PornServiceApi.getVideoPlayPage(viewKeyQuery, ip, HeaderUtils.getIndexHeader(addressHelper))
                 .map(html -> ParseV9PronVideo.parseVideoPlayUrl(html, user));
     }
 
