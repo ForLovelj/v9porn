@@ -320,8 +320,8 @@ public class ParseV9PronVideo {
         videoResult.setVideoUrl(videoUrl);
         Logger.t(TAG).d("视频链接：" + videoUrl);
 
-        int startIndex = videoUrl.lastIndexOf("/");
         int endIndex = videoUrl.indexOf(".mp4");
+        int startIndex = videoUrl.substring(0, endIndex).lastIndexOf("/");
         String videoId = videoUrl.substring(startIndex + 1, endIndex);
         videoResult.setVideoId(videoId);
         Logger.t(TAG).d("视频Id：" + videoId);
