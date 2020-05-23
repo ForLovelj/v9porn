@@ -346,6 +346,10 @@ public class ParseV9PronVideo {
         String vuid = favorite.getElementById("VUID").text();
 
         Logger.t(TAG).d("userId:::" + uid);
+        //登录才会有uid
+        if (TextUtils.isEmpty(uid)) {
+            uid = "0";
+        }
         user.setUserId(Integer.parseInt(uid));
 
         //原始纯数字作者id，用于收藏接口
