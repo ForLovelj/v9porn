@@ -68,6 +68,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import io.rx_cache2.DynamicKey;
 import io.rx_cache2.DynamicKeyGroup;
 import io.rx_cache2.EvictDynamicKey;
@@ -262,13 +264,10 @@ public class AppApiHelper implements ApiHelper {
     public Observable<String> favoritePorn9Video(String uId, String videoId, String ownnerId) {
         String cpaintFunction = "addToFavorites";
         String responseType = "json";
-        return v9PornServiceApi.favoriteVideo(cpaintFunction, uId, videoId, ownnerId, responseType, HeaderUtils.getIndexHeader(addressHelper))
+        return v9PornServiceApi.favoriteVideo(uId,videoId,ownnerId,HeaderUtils.getIndexHeader(addressHelper))
                 .map(s -> {
                     Logger.t(TAG).d("favoriteStr: " + s);
-                    return new Gson().fromJson(s, FavoriteJsonResult.class);
-                })
-                .map(favoriteJsonResult -> favoriteJsonResult.getAddFavMessage().get(0).getData())
-                .map(code -> {
+                    int code = Integer.parseInt(s);
                     String msg;
                     switch (code) {
                         case FavoriteJsonResult.FAVORITE_SUCCESS:
@@ -283,6 +282,27 @@ public class AppApiHelper implements ApiHelper {
                     }
                     return msg;
                 });
+//        return v9PornServiceApi.favoriteVideo(cpaintFunction, uId, videoId, ownnerId, responseType, HeaderUtils.getIndexHeader(addressHelper))
+//                .map(s -> {
+//                    Logger.t(TAG).d("favoriteStr: " + s);
+//                    return new Gson().fromJson(s, FavoriteJsonResult.class);
+//                })
+//                .map(favoriteJsonResult -> favoriteJsonResult.getAddFavMessage().get(0).getData())
+//                .map(code -> {
+//                    String msg;
+//                    switch (code) {
+//                        case FavoriteJsonResult.FAVORITE_SUCCESS:
+//                            msg = "收藏成功";
+//                            break;
+//                        case FavoriteJsonResult.FAVORITE_FAIL:
+//                            throw new FavoriteException("收藏失败");
+//                        case FavoriteJsonResult.FAVORITE_YOURSELF:
+//                            throw new FavoriteException("不能收藏自己的视频");
+//                        default:
+//                            throw new FavoriteException("收藏失败");
+//                    }
+//                    return msg;
+//                });
     }
 
     @Override
@@ -297,8 +317,9 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Observable<List<V9PornItem>> deletePorn9MyFavoriteVideo(String rvid) {
-        String removeFavour = "Remove FavoriteJsonResult";
-        return v9PornServiceApi.deleteMyFavoriteVideo(rvid, removeFavour, 45, 19, HeaderUtils.getFavHeader(addressHelper))
+        String removeFavour = "Remove Favorite";
+        String submit = "submit";
+        return v9PornServiceApi.deleteMyFavoriteVideo(rvid, removeFavour, submit, HeaderUtils.getFavHeader(addressHelper))
                 .map(ParseV9PronVideo::parseMyFavorite)
                 .map(baseResult -> {
                     if (baseResult.getCode() == BaseResult.ERROR_CODE) {

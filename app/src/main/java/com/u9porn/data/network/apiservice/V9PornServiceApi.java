@@ -135,6 +135,11 @@ public interface V9PornServiceApi {
     @POST("/my_favour.php")
     Observable<String> deleteMyFavoriteVideo(@Field("rvid") String rvid, @Field("removfavour") String removFavour, @Field("x") int x, @Field("y") int y, @Header("Referer") String referer);
 
+    @Headers({"Domain-Name: " + Api.PORN9_VIDEO_DOMAIN_NAME})
+    @FormUrlEncoded
+    @POST("/my_favour.php")
+    Observable<String> deleteMyFavoriteVideo(@Field("rvid") String rvid, @Field("removfavour") String removFavour, @Field("submit") String submit, @Header("Referer") String referer);
+
 
     /**
      * 收藏视频
@@ -149,6 +154,10 @@ public interface V9PornServiceApi {
     @Headers({"Domain-Name: " + Api.PORN9_VIDEO_DOMAIN_NAME})
     @GET("/ajax/myajaxphp.php")
     Observable<String> favoriteVideo(@Query("cpaint_function") String cpaintFunction, @Query("cpaint_argument[]") String uId, @Query("cpaint_argument[]") String videoId, @Query("cpaint_argument[]") String ownerId, @Query("cpaint_response_type") String responseType, @Header("Referer") String referer);
+
+    @Headers({"Domain-Name: " + Api.PORN9_VIDEO_DOMAIN_NAME})
+    @GET("/add_favorite.php")
+    Observable<String> favoriteVideo(@Query("VID") String vid, @Query("UID") String uid, @Query("VUID") String vuid, @Header("Referer") String referer);
 
     /**
      * //xxxxxxxxxxx/show_comments2.php?VID=247965&start=1&comment_per_page=20

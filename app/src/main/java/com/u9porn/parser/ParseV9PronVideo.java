@@ -182,7 +182,14 @@ public class ParseV9PronVideo {
             }
 
             String info = allInfo.substring(start);
-
+            try {
+                if (TextUtils.equals(v9PornItem.getDuration(), "00:00")) {
+                    String duration = allInfo.substring(allInfo.indexOf("时长:") + 3, allInfo.indexOf("查看"));
+                    v9PornItem.setDuration(duration);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             v9PornItem.setInfo(info);
             // Logger.d(info);
             v9PornItemList.add(v9PornItem);
@@ -333,20 +340,17 @@ public class ParseV9PronVideo {
         videoResult.setOwnerId(ownerId);
         Logger.t(TAG).d("作者Id：" + ownerId);
 
-        String addToFavLink = doc.getElementById("addToFavLink").selectFirst("a").attr("onClick");
-        String[] args = addToFavLink.split(",");
-        String userId = "0";
-        if (args.length > 1) {
-            userId = args[1].trim();
-        }
+        Element favorite = doc.getElementById("addToFavLink").getElementById("favorite");
+        String uid = favorite.getElementById("UID").text();
+        String vid = favorite.getElementById("VID").text();
+        String vuid = favorite.getElementById("VUID").text();
 
-        Logger.t(TAG).d("userId:::" + userId);
-        user.setUserId(Integer.parseInt(userId));
+        Logger.t(TAG).d("userId:::" + uid);
+        user.setUserId(Integer.parseInt(uid));
 
         //原始纯数字作者id，用于收藏接口
-        String authorId = args[3].replace(");", "").trim();
-        Logger.t(TAG).d("authorId:::" + authorId);
-        videoResult.setAuthorId(authorId);
+        Logger.t(TAG).d("authorId:::" + vuid);
+        videoResult.setAuthorId(vuid);
 
         String ownerName = doc.select("a[href*=UID]").first().text();
         videoResult.setOwnerName(ownerName);
@@ -453,62 +457,85 @@ public class ParseV9PronVideo {
      * @return list
      */
     public static BaseResult<List<V9PornItem>> parseMyFavorite(String html) {
-        int totalPage = 1;
-        List<V9PornItem> v9PornItemList = new ArrayList<>();
         Document doc = Jsoup.parse(html);
-        Element body = doc.getElementById("leftside");
+        Element body = doc.getElementById("wrapper");
 
-        Elements videos = doc.select("div.myvideo");
+        Element container = body.selectFirst("div.container");
 
-        for (Element element : videos) {
-
+        List<V9PornItem> v9PornItemList = new ArrayList<>();
+        Elements select = container.select("div.row>div.col-sm-12>div.row>div");
+        for (Element item : select) {
+            Element a = item.selectFirst("a");
+            if (a == null) {
+                continue;
+            }
             V9PornItem v9PornItem = new V9PornItem();
 
-            String contentUrl = element.select("a").first().attr("href");
-
-            String viewKey = contentUrl.substring(contentUrl.indexOf("=") + 1, contentUrl.length());
-            v9PornItem.setViewKey(viewKey);
-            Logger.t(TAG).d(viewKey);
-
-            String title = element.select("strong").first().text();
+            String title = a.getElementsByClass("video-title").first().text().trim();
             v9PornItem.setTitle(title);
-            Logger.t(TAG).d(title);
 
-            String imgUrl = element.select("img").first().attr("src");
-            v9PornItem.setImgUrl(imgUrl);
-            Logger.t(TAG).d(imgUrl);
+            Element imgEle = a.selectFirst("img.img-responsive");
+            if (imgEle != null) {
+                v9PornItem.setImgUrl(imgEle.attr("src"));
+            }
 
-            String allInfo = element.text();
-            Logger.t(TAG).d(allInfo);
+            Element durationEle = a.selectFirst("span.duration");
+            if (durationEle != null) {
+                v9PornItem.setDuration(durationEle.text().trim());
+            } else {
+                v9PornItem.setDuration("00:00");
+            }
 
-            String duration = allInfo.substring(allInfo.indexOf("时长") + 3, allInfo.indexOf("Views") - 3);
-            v9PornItem.setDuration(duration);
-            Logger.t(TAG).d(duration);
 
-            String info = allInfo.substring(allInfo.indexOf("添加时间"), allInfo.length());
+            String contentUrl = a.attr("href");
+
+            String viewKey = contentUrl.substring(contentUrl.indexOf("?") + 1);
+            v9PornItem.setViewKey(viewKey);
+
+            String allInfo = item.text();
+
+            // Added: / 添加時間: / 添加时间:
+
+            int start = allInfo.indexOf("添加时间:");
+            if (start == -1) {
+                start = allInfo.indexOf("Added:");
+                if (start == -1) {
+                    start = allInfo.indexOf("添加時間:");
+                }
+            }
+
+            String info = allInfo.substring(start);
+            try {
+                if (TextUtils.equals(v9PornItem.getDuration(), "00:00")) {
+                    String duration = allInfo.substring(allInfo.indexOf("时长:") + 3, allInfo.indexOf("查看"));
+                    v9PornItem.setDuration(duration);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             v9PornItem.setInfo(info);
-            Logger.t(TAG).d(info);
-
-            String rvid = element.select("input").first().attr("value");
+            // Logger.d(info);
+            String rvid = item.select("input").first().attr("value");
             Logger.t(TAG).d("rvid::" + rvid);
             VideoResult videoResult = new VideoResult();
             videoResult.setId(VideoResult.OUT_OF_WATCH_TIMES);
             videoResult.setVideoId(rvid);
             v9PornItem.setVideoResult(videoResult);
-
             v9PornItemList.add(v9PornItem);
-        }
 
-        //总页数
-        Element pagingnav = body.getElementById("paging");
-        Elements a = pagingnav.select("a");
-        if (a.size() >= 2) {
+        }
+        // get page info
+        int totalPage = 1;
+        Element paging = body.getElementById("paging");
+        Elements a = paging.select("a");
+        if (a.size() > 2) {
             String ppp = a.get(a.size() - 2).text();
             if (TextUtils.isDigitsOnly(ppp)) {
                 totalPage = Integer.parseInt(ppp);
-                Logger.d("总页数：" + totalPage);
+                //Logger.d("总页数：" + totalPage);
             }
         }
+
         BaseResult<List<V9PornItem>> baseResult = new BaseResult<>();
         //尝试解析删除信息
         Elements msgElements = doc.select("div.msgbox");
