@@ -49,6 +49,11 @@ public class ParseKeDouWo {
             Logger.d("videoUrl: "+videoUrl);
             keDouRelated.setVideoUrl(videoUrl);
         }
+        //从下载解析
+        String videoUrl = document.select("div.info").last().getElementsByClass("item").last().select("a").attr("href");
+        Logger.d("videoUrl: "+videoUrl);
+
+        keDouRelated.setVideoUrl(videoUrl);
 
         Elements relatedList = document.select("#list_videos_related_videos_items").first().select(".item");
         List<KeDouModel> keDouModels = parseList(relatedList);
