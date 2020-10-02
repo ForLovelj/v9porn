@@ -42,7 +42,7 @@ public interface V9PornServiceApi {
      */
     @Headers({"Domain-Name: " + Api.PORN9_VIDEO_DOMAIN_NAME})
     @GET("/view_video.php")
-    Observable<String> getVideoPlayPage(@QueryMap Map<String, String> viewkey, @Header("X-Forwarded-For") String ipAddress, @Header("Referer") String referer);
+    Observable<String> getVideoPlayPage(@QueryMap Map<String, String> viewkey, @Header("delete=X-Forwarded-For") String ipAddress, @Header("Referer") String referer);
 
     /**
      * 获取相应类别数据

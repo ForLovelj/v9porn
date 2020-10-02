@@ -1,10 +1,10 @@
 {
-"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.2.2.apk",
+"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.2.3.apk",
 "updateMessage": "
-1. 修复视频解析(来自techGay方案)\n
+1. 修复视频解析(91站点变化太快，且行且珍惜)\n
 2. 其他\n
 注意：无法自动更新或者9.0以上系统需要手动下载apk升级
 ",
-"versionCode": 22,
-"versionName": "1.2.2"
+"versionCode": 23,
+"versionName": "1.2.3"
 }

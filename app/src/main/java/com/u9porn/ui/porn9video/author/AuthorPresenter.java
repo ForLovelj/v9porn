@@ -31,6 +31,7 @@ public class AuthorPresenter extends MvpBasePresenter<AuthorView> implements IAu
     private static final String TAG = AuthorPresenter.class.getSimpleName();
     private LifecycleProvider<Lifecycle.Event> provider;
     private int page = 1;
+    private int pullCount = 0;
     private Integer totalPage;
     private boolean cleanCache;
     private DataManager dataManager;
@@ -48,6 +49,12 @@ public class AuthorPresenter extends MvpBasePresenter<AuthorView> implements IAu
         if (pullToRefresh) {
             page = 1;
             cleanCache = true;
+            pullCount++;
+            if (pullCount % 2 == 1) {
+                type = "public";
+            } else {
+                type = "private";
+            }
         }
         dataManager.loadPorn9authorVideos(uid, type, page, cleanCache)
                 .map(new Function<BaseResult<List<V9PornItem>>, List<V9PornItem>>() {
