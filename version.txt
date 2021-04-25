@@ -1,11 +1,11 @@
 {
-"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.2.7.apk",
+"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.2.8.apk",
 "updateMessage": "
 1. 修复主页解析失败问题(91站点变化太快，且行且珍惜)\n
 2. 修复下载功能(目前去除下载mp4格式，效率太低，更新为下载ts文件，下载成功后用第三方播放器打开)\n
-3. 修复老视频和蝌蚪窝播放问题\n
+3. 修复老视频播放下载问题\n
 注意：无法自动更新或者9.0以上系统需要手动下载apk升级
 ",
-"versionCode": 27,
-"versionName": "1.2.7"
+"versionCode": 28,
+"versionName": "1.2.8"
 }
