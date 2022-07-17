@@ -1,9 +1,9 @@
 {
-"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.3.0.apk",
+"apkDownloadUrl": "https://raw.githubusercontent.com/ForLovelj/v9porn/master/apk/v9porn_v1.3.1.apk",
 "updateMessage": "
-1. 修复视频解析问题\n
+1. 修复分类视频解析问题\n
 注意：无法自动更新或者9.0以上系统需要手动下载apk升级
 ",
-"versionCode": 30,
-"versionName": "1.3.0"
+"versionCode": 31,
+"versionName": "1.3.1"
 }
